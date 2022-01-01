@@ -1,0 +1,16 @@
+---
+- name: ensure config directory
+  file:
+    path: /opt/homeassistant/config
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: deploy config file
+  copy:
+    src: configuration.yaml
+    dest: /opt/homeassistant/config
+    mode: '0644'
+    owner: root
+    group: root

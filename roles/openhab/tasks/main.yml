@@ -1,0 +1,3 @@
+---
+- include: repos.yml
+- include: openhab_packages.yml

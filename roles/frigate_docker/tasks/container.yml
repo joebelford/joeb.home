@@ -1,0 +1,25 @@
+---
+  - name: ensure frigate is up
+    docker_container:
+      name: frigate
+      image: blakeblackshear/frigate:stable-amd64nvidia
+      state: started
+      tty: yes
+      #      network_mode: host
+      devices:
+        - /dev/dri/renderD128:/dev/dri/renderD128
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /opt/frigate/config.yml:/config/config.yml:ro
+        - /media/frigate:/media/frigate
+      shm_size: 64M
+      privileged: yes
+      restart: yes
+      ports:
+        - "5000:5000"
+        - "1935:1935"
+      pull: true
+      restart_policy: unless-stopped
+      env:
+        TZ: America/New_York
+        FRIGATE_RTSP_PASSWORD: ""

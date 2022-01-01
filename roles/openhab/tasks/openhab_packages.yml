@@ -1,0 +1,7 @@
+---
+- name: Install openhab packages
+  apt:
+    name: "{{ openhab_packages }}"
+    state: latest
+    update_cache: yes
+  tags: openhab_packages

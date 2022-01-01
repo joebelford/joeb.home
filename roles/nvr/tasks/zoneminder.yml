@@ -1,0 +1,22 @@
+---
+- name: Update repositories cache and install "zoneminder" package
+  apt:
+    name: zoneminder
+    update_cache: yes
+
+- name: Add the user 
+  user:
+    name: www-data
+    comment: www-data user
+    group: www-data
+    groups: 
+        - video
+        - render
+    append: yes
+    state: present
+
+- name: enable zoneminder service 
+  systemd:
+    name: zoneminder
+    state: started
+    enabled: yes

@@ -1,0 +1,23 @@
+---
+  - name: ensure kerberosio is up
+    tags: kerberos-io_docker
+    docker_container:
+      name: GarageEntrance
+      image: kerberos/kerberos
+      state: started
+      tty: yes
+      devices:
+        - /dev/dri:/dev/dri
+      network_mode: host
+      volumes:
+        - /opt/kerberosio/config:/etc/opt/kerberosio/config
+        - /opt/kerberosio/capture:/etc/opt/kerberosio/capture
+        - /opt/kerberosio/logs:/etc/opt/kerberosio/logs
+        - /opt/kerberosio/webconfig:/var/www/web/config
+          #  ports:
+          # - 81:80
+          # - 8889:8889
+      pull: true
+      restart_policy: unless-stopped
+      env:
+        TZ: America/New_York

@@ -1,0 +1,7 @@
+---
+- name: Install base packages for development workstation
+  apt:
+    name: "{{ base_packages }}"
+    state: latest
+    update_cache: yes
+  tags: base_packages

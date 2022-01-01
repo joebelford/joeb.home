@@ -1,0 +1,61 @@
+mqtt:
+  host: 10.0.1.5
+objects:
+  track:
+    - person
+    - car
+    - cat
+    - dog
+cameras:
+  garageEntrance:
+    ffmpeg:
+      hwaccel_args:
+        - -hwaccel
+        - auto
+      inputs:
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.234/ch01/1
+          roles:
+            - detect
+            - rtmp
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.234/ch01/0
+          roles:
+            - record
+    detect:
+      width: 640
+      height: 480
+    record:
+      enabled: True
+    snapshots:
+      enabled: True
+  driveway:
+    motion:
+      mask:
+        - 599,293,640,325,640,480,481,480
+        - 640,0,179,0,180,21,640,171
+    objects:
+      filters:
+        car:
+          mask:
+        person:
+          mask:
+            - 519,428,436,417,438,388,535,402
+    ffmpeg:
+      hwaccel_args:
+        - -hwaccel
+        - auto
+      inputs:
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.218/ch01/1
+          roles:
+            - detect
+            - rtmp
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.218/ch01/0
+          roles:
+            - record
+    detect:
+      width: 640
+      height: 480
+    record:
+      enabled: True
+    snapshots:
+      enabled: True
+

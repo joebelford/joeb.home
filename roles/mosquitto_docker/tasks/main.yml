@@ -1,0 +1,5 @@
+---
+- include: volumes.yml
+  tags: mosquitto_docker
+- include: container.yml
+  tags: mosquitto_docker

@@ -1,0 +1,4 @@
+---
+openhab_packages:
+        - apt-transport-https
+        - openhab

@@ -1,0 +1,22 @@
+---
+  - name: ensure mosquitto is up
+    docker_container:
+      name: mosquitto
+      image: eclipse-mosquitto
+      state: started
+      tty: yes
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /opt/mosquitto/data:/mosquitto/data
+        - /opt/mosquitto/log:/mosquitto/log
+        - /opt/mosquitto/config:/mosquitto/config
+        - /opt/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      privileged: no
+      restart: yes
+      ports:
+        - "1883:1883"
+        - "9001:9001"
+      pull: true
+      restart_policy: unless-stopped
+      env:
+        TZ: America/New_York

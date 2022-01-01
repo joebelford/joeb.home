@@ -1,0 +1,21 @@
+---
+base_packages:
+        - build-essential
+        - autoconf
+        - automake
+        - autopoint
+        - pkgconf
+        - libtool
+        - libjpeg-dev
+        - git
+        - libzip-dev
+        - libwebp-dev
+        - gettext
+        - libmicrohttpd-dev
+
+ffmpeg_packages:
+        - libavformat-dev
+        - libavcodec-dev
+        - libavutil-dev
+        - libswscale-dev
+        - libavdevice-dev

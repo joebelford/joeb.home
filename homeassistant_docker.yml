@@ -1,0 +1,3 @@
+- hosts: homeassistant_docker,localhost
+  roles:
+    - homeassistant_docker

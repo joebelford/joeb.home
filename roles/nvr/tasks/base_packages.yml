@@ -1,0 +1,7 @@
+---
+- name: Install base packages for LAMP stack
+  apt:
+    name: "{{ base_packages }}"
+    state: latest
+    update_cache: yes
+  tags: base_packages

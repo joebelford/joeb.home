@@ -1,0 +1,22 @@
+---
+  - name: ensure zwavejs2mqtt is up
+    tags: zwavejs2mqtt_docker
+    docker_container:
+      name: zwavejs2mqtt
+      image: zwavejs/zwavejs2mqtt:latest
+      state: started
+      tty: yes
+      devices:
+        - /dev/serial/by-id/usb-0658_0200-if00:/dev/zwave
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /opt/zwavejs2mqtt/store:/usr/src/app/store
+      privileged: no
+      restart: yes
+      ports:
+        - "3000:3000"
+        - "8091:8091"
+      pull: true
+      restart_policy: unless-stopped
+      env:
+        TZ: America/New_York

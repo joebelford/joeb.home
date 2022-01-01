@@ -1,0 +1,11 @@
+---
+- name: Add apt repository
+  apt_repository:
+    repo: deb http://deb.debian.org/debian/ buster main contrib non-free
+    state: present
+    update_cache: yes
+
+- name: Update repositories cache and install "nvidia" package
+  apt:
+    name: nvidia-legacy-340xx-driver
+    update_cache: yes

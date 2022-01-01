@@ -1,0 +1,5 @@
+---
+- include: volumes.yml
+  tags: frigate_docker
+- include: container.yml
+  tags: frigate_docker

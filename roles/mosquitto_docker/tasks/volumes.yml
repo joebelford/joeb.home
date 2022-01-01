@@ -1,0 +1,41 @@
+---
+
+  - name: ensure mosquitto directory exists
+    file:
+      path: /opt/mosquitto
+      state: directory
+      mode: '0777'
+      owner: 1883
+      group: 1883
+
+  - name: ensure mosquitto log directory exists
+    file:
+      path: /opt/mosquitto/log
+      state: directory
+      mode: '0777'
+      owner: 1883
+      group: 1883
+
+  - name: ensure mosquitto data directory exists
+    file:
+      path: /opt/mosquitto/data
+      state: directory
+      mode: '0777'
+      owner: 1883
+      group: 1883
+
+  - name: ensure mosquitto data directory exists
+    file:
+      path: /opt/mosquitto/config
+      state: directory
+      mode: '0777'
+      owner: 1883
+      group: 1883
+
+  - name: ensure config file
+    copy:
+      src: mosquitto.conf
+      dest: /opt/mosquitto/config/mosquitto.conf
+      mode: '0644'
+      owner: 1883
+      group: 1883

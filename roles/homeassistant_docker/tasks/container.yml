@@ -1,0 +1,18 @@
+---
+  - name: ensure homeassistant is up
+    tags: homeassistant_docker
+    docker_container:
+      name: home-assistant
+      image: homeassistant/home-assistant:stable
+      state: started
+      tty: yes
+      network_mode: host
+      devices:
+        - /dev/dri:/dev/dri
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /opt/homeassistant/config:/config
+      pull: true
+      restart_policy: unless-stopped
+      env:
+        TZ: America/New_York

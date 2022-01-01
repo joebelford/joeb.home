@@ -1,0 +1,3 @@
+- hosts: mosquitto_docker,localhost
+  roles:
+    - mosquitto_docker

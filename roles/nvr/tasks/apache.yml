@@ -1,0 +1,17 @@
+---
+- name: enable zoneminder conf
+  command: a2enconf zoneminder 
+  tags: apache
+ 
+- name: enable module
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  loop: "{{ apache_modules }}"
+  tags: apache
+
+- name: Reload apache2 service
+  systemd:
+    name: apache2
+    state: reloaded
+  tags: apache

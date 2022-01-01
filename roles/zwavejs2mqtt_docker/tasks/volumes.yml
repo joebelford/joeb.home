@@ -1,0 +1,25 @@
+---
+
+  - name: ensure zwavejs2mqtt directory exists
+    file:
+      path: /opt/zwavejs2mqtt
+      state: directory
+      mode: '0777'
+      # owner: 1883
+      # group: 1883
+
+  - name: ensure zwavejs2mqtt store directory exists
+    file:
+      path: /opt/zwavejs2mqtt/store
+      state: directory
+      mode: '0777'
+      # owner: 1883
+      # group: 1883
+
+  # - name: ensure config file
+  #   copy:
+  #     src: mosquitto.conf
+  #     dest: /opt/mosquitto/config/mosquitto.conf
+  #     mode: '0644'
+  #     owner: 1883
+  #     group: 1883

@@ -1,0 +1,5 @@
+---
+- include: volumes.yml
+  tags: zwavejs2mqtt_docker
+- include: container.yml
+  tags: zwavejs2mqtt_docker
