@@ -1,3 +1,0 @@
-- hosts: nvr,localhost
-  roles:
-    - remove_nvr

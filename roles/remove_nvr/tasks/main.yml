@@ -1,5 +1,0 @@
----
-- include: base_packages.yml
-- include: repos.yml
-- include: zoneminder.yml
-- include: config.yml
