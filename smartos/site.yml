@@ -1,4 +1,3 @@
 ---
 - import_playbook: zones.yml
 - import_playbook: routers.yml
-- import_playbook: nvr.yml
