@@ -1,3 +1,4 @@
-- hosts: docker,localhost
+- hosts: docker
   roles:
+    - common
     - docker

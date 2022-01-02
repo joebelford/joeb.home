@@ -1,0 +1,13 @@
+all:
+  hosts:
+    zotac:
+      ansible_host: 10.0.1.20
+    proliant:
+      ansible_host: 10.0.1.10
+  vars:
+    ansible_user: joe
+  children:
+    docker:
+      hosts:
+        zotac:
+        proliant:

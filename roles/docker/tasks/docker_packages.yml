@@ -1,7 +1,0 @@
----
-- name: Install docker packages
-  apt:
-    name: "{{ docker_packages }}"
-    state: latest
-    update_cache: yes
-  tags: docker_packages
