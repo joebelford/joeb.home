@@ -1,3 +1,4 @@
-- hosts: mosquitto_docker,localhost
+---
+- hosts: mosquitto
   roles:
     - mosquitto_docker

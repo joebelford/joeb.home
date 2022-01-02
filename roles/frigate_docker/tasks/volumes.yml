@@ -1,18 +1,18 @@
 ---
-  - name: ensure frigate directory exists
-    file:
-      path: /media/frigate
-      state: directory
-      mode: '0777'
+- name: ensure frigate directory exists
+  file:
+    path: /media/frigate
+    state: directory
+    mode: "0777"
 
-  - name: ensure frigate directory exists
-    file:
-      path: /opt/frigate
-      state: directory
-      mode: '0777'
+- name: ensure frigate directory exists
+  file:
+    path: /opt/frigate
+    state: directory
+    mode: "0777"
 
-  - name: ensure config file
-    copy:
-      src: config.yml
-      dest: /opt/frigate/config.yml
-      mode: '0644'
+- name: ensure config file
+  copy:
+    src: config.yml
+    dest: /opt/frigate/config.yml
+    mode: "0644"

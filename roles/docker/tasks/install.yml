@@ -8,13 +8,13 @@
   apt_repository:
     repo: deb https://download.docker.com/linux/debian bullseye stable
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Install docker packages
   apt:
     name: "{{ docker_packages }}"
     state: latest
-    update_cache: yes
+    update_cache: true
 
 - name: Install docker python module
   pip:
@@ -26,4 +26,4 @@
     name: joe
     groups:
       - docker
-    append: yes
+    append: true

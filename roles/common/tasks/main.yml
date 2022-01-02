@@ -1,5 +1,5 @@
 ---
 - import_tasks: install.yml
-  become: yes
+  become: true
   become_method: su
   become_flags: "-"

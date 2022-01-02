@@ -1,26 +1,26 @@
 ---
-  - name: ensure frigate is up
-    docker_container:
-      name: frigate
-      image: blakeblackshear/frigate:0.10.0-beta6-amd64
-      state: started
-      tty: yes
-      devices:
-        - /dev/dri/renderD128:/dev/dri/renderD128
-      volumes:
-        - /etc/localtime:/etc/localtime:ro
-        - /opt/frigate/config.yml:/config/config.yml:ro
-        - /media/frigate:/media/frigate
-      shm_size: 64M
-      privileged: no
-      restart: yes
-      ports:
-        - "5000:5000"
-        - "1935:1935"
-      pull: true
-      restart_policy: unless-stopped
-      env:
-        TZ: America/New_York
-        FRIGATE_RTSP_PASSWORD: "{{ FRIGATE_RTSP_PASSWORD }}"
-    async: 1200
-    poll: 10
+- name: ensure frigate is up
+  docker_container:
+    name: frigate
+    image: blakeblackshear/frigate:0.10.0-beta6-amd64
+    state: started
+    tty: true
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/frigate/config.yml:/config/config.yml:ro
+      - /media/frigate:/media/frigate
+    shm_size: 64M
+    privileged: false
+    restart: true
+    ports:
+      - "5000:5000"
+      - "1935:1935"
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      TZ: America/New_York
+      FRIGATE_RTSP_PASSWORD: "{{ FRIGATE_RTSP_PASSWORD }}"
+  async: 1200
+  poll: 10

@@ -1,5 +1,5 @@
 mqtt:
-  host: 10.0.1.5
+  host: 10.0.1.20
 objects:
   track:
     - person
@@ -11,7 +11,11 @@ cameras:
     ffmpeg:
       hwaccel_args:
         - -hwaccel
-        - auto
+        - vaapi
+        - -hwaccel_device
+        - /dev/dri/renderD128
+        - -hwaccel_output_format
+        - yuv420p
       inputs:
         - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.234/ch01/1
           roles:
@@ -42,7 +46,11 @@ cameras:
     ffmpeg:
       hwaccel_args:
         - -hwaccel
-        - auto
+        - vaapi
+        - -hwaccel_device
+        - /dev/dri/renderD128
+        - -hwaccel_output_format
+        - yuv420p
       inputs:
         - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.218/ch01/1
           roles:
@@ -58,4 +66,3 @@ cameras:
       enabled: True
     snapshots:
       enabled: True
-

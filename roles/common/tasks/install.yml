@@ -1,19 +1,18 @@
 ---
-
 - name: add joe to sudoers
   ansible.builtin.user:
     name: joe
     groups:
       - sudo
-    append: yes
+    append: true
 
 - name: no password for sudoers
   lineinfile:
-      path: /etc/sudoers
-      state: present
-      regexp: '^%sudo'
-      line: '%sudo ALL=(ALL) NOPASSWD: ALL'
-      validate: '/usr/sbin/visudo -cf %s'
+    path: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    validate: "/usr/sbin/visudo -cf %s"
 
 - name: add authorized key
   ansible.posix.authorized_key:
@@ -25,7 +24,7 @@
   apt_repository:
     repo: "{{ item }}"
     state: present
-    update_cache: yes
+    update_cache: true
   loop: "{{ debian_repos }}"
 
 - name: install base packages
@@ -37,18 +36,18 @@
   apt:
     name: vainfo
     state: latest
-    update_cache: yes
+    update_cache: true
 
 - name: Install mesa-va-drivers package
   apt:
     name: mesa-va-drivers
     state: latest
-    update_cache: yes
+    update_cache: true
   when: inventory_hostname_short == 'zotac'
 
 - name: Install intel-media-va-driver-non-free package
   apt:
     name: intel-media-va-driver-non-free
     state: latest
-    update_cache: yes
+    update_cache: true
   when: inventory_hostname_short == 'proliant'
