@@ -20,3 +20,10 @@
   pip:
     name: docker
     state: latest
+
+- name: add joe to docker group
+  ansible.builtin.user:
+    name: joe
+    groups:
+      - docker
+    append: yes

@@ -11,3 +11,6 @@ all:
       hosts:
         zotac:
         proliant:
+    frigate:
+      hosts:
+        zotac:

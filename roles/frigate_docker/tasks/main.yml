@@ -1,5 +1,7 @@
 ---
-- include: volumes.yml
+- import_tasks: volumes.yml
+  become: yes
   tags: frigate_docker
-- include: container.yml
+
+- import_tasks: container.yml
   tags: frigate_docker
