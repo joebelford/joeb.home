@@ -3,16 +3,16 @@
   file:
     path: /media/frigate
     state: directory
-    mode: "0777"
+    mode: "0750"
 
 - name: ensure frigate directory exists
   file:
     path: /opt/frigate
     state: directory
-    mode: "0777"
+    mode: "0750"
 
 - name: ensure config file
   copy:
     src: config.yml
     dest: /opt/frigate/config.yml
-    mode: "0644"
+    mode: "0640"

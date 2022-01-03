@@ -12,7 +12,6 @@
       - /opt/mosquitto/config:/mosquitto/config
       - /opt/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
     privileged: false
-    restart: true
     ports:
       - "1883:1883"
       - "9001:9001"

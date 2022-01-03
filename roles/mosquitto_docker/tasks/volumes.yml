@@ -3,38 +3,26 @@
   file:
     path: /opt/mosquitto
     state: directory
-    mode: "0777"
+    mode: "0750"
     owner: 1883
     group: 1883
 
 - name: ensure mosquitto log directory exists
   file:
-    path: /opt/mosquitto/log
+    path: /opt/mosquitto/{{ item }}
     state: directory
-    mode: "0777"
+    mode: "0750"
     owner: 1883
     group: 1883
-
-- name: ensure mosquitto data directory exists
-  file:
-    path: /opt/mosquitto/data
-    state: directory
-    mode: "0777"
-    owner: 1883
-    group: 1883
-
-- name: ensure mosquitto data directory exists
-  file:
-    path: /opt/mosquitto/config
-    state: directory
-    mode: "0777"
-    owner: 1883
-    group: 1883
+  loop:
+    - log
+    - data
+    - config
 
 - name: ensure config file
   copy:
     src: mosquitto.conf
     dest: /opt/mosquitto/config/mosquitto.conf
-    mode: "0644"
+    mode: "0640"
     owner: 1883
     group: 1883
