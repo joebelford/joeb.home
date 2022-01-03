@@ -11,8 +11,8 @@
     state: directory
     mode: "0750"
 
-- name: ensure config file
-  copy:
-    src: config.yml
+- name: deploy config file
+  template:
+    src: config.yml.j2
     dest: /opt/frigate/config.yml
     mode: "0640"

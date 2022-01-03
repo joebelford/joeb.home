@@ -1,3 +1,5 @@
 - hosts: frigate
   roles:
-    - frigate_docker
+    - role: frigate_docker
+      vars:
+        mqtt_host: "{{hostvars[groups['mosquitto'][0]].ansible_host }}"
