@@ -21,3 +21,6 @@ all:
     homeassistant:
       hosts:
         zotac:
+    homebridge:
+      hosts:
+        zotac:

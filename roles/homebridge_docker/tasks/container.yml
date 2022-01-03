@@ -1,0 +1,22 @@
+---
+- name: ensure homebridge is up
+  tags: homebridge_docker
+  docker_container:
+    name: homebridge
+    image: oznu/homebridge
+    state: started
+    privileged: false
+    tty: true
+    network_mode: host
+    # devices:
+    #   - /dev/dri:/dev/dri
+    volumes:
+      - /opt/homebridge:/homebridge
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      PGID: "8581"
+      PUID: "8581"
+      HOMEBRIDGE_CONFIG_UI: "1"
+      HOMEBRIDGE_CONFIG_UI_PORT: "8581"
+      TZ: America/New_York
