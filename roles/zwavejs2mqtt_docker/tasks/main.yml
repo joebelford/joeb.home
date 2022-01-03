@@ -1,5 +1,6 @@
 ---
-- include: volumes.yml
+- import_tasks: volumes.yml
+  become: true
   tags: zwavejs2mqtt_docker
-- include: container.yml
+- import_tasks: container.yml
   tags: zwavejs2mqtt_docker
