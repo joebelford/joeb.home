@@ -1,3 +1,6 @@
 ---
-- include: container.yml
-- include: config.yml
+- import_tasks: config.yml
+  become: true
+  tags:
+    - configure
+- import_tasks: container.yml

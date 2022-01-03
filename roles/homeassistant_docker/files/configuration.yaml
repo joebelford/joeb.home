@@ -1,8 +1,19 @@
-
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-# Text to speech
+homeassistant:
+  name: !secret homeassistant_name
+  latitude: !secret zones_home_latitude
+  longitude: !secret zones_home_longitude
+  elevation: !secret zones_home_elevation
+  unit_system: imperial
+  currency: USD
+  time_zone: "America/New_York"
+  # external_url: !secret external_url
+  # internal_url: !secret internal_url
+  packages: !include_dir_named packages
+  legacy_templates: false
+
 tts:
   - platform: google_translate
 
@@ -10,15 +21,18 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+zone: !include zones.yaml
 cloud:
+customize: !include customize.yaml
 lovelace:
+  mode: yaml
   resources:
-    - url: /hacsfiles/frigate-hass-card/frigate-hass-card.js
+    - url: /local/frigate-hass-card.js
       type: module
-notify:
-  - name: ALL_DEVICES
-    platform: group
-    services:
-       - service: mobile_app_joe_s_iphone
-       - service: mobile_app_kristys_iphone
+notify: !include notify.yaml
 
+mqtt:
+  broker: 10.0.1.20
+
+frigate:
+  url: http://10.0.1.10:5000

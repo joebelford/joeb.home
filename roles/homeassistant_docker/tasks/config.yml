@@ -7,10 +7,62 @@
     owner: root
     group: root
 
-- name: deploy config file
+- name: ensure config subdirectories directory
+  file:
+    path: /opt/homeassistant/config/{{ item }}
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  loop:
+    - custom_components/frigate
+    - local
+    - blueprints/automation/hunterjm
+
+- name: deploy config files
   copy:
-    src: configuration.yaml
+    src: "{{ item }}"
     dest: /opt/homeassistant/config
     mode: '0644'
     owner: root
     group: root
+  loop:
+    - configuration.yaml
+    - automations.yaml
+    - ui-lovelace.yaml
+    - zones.yaml
+    - groups.yaml
+    - scripts.yaml
+    - scenes.yaml
+    - customize.yaml
+    - notify.yaml
+
+- name: deploy secrets
+  template:
+    src: secrets.yaml.j2
+    dest: /opt/homeassistant/config/secrets.yaml
+    mode: 0600
+    owner: root
+    group: root
+
+- name: get latest hass integration
+  ansible.builtin.unarchive:
+    src: https://github.com/blakeblackshear/frigate-hass-integration/archive/refs/tags/v2.2.0.zip
+    dest: /opt/homeassistant/config/custom_components/frigate
+    remote_src: true
+    extra_opts:
+      - -j
+    include:
+      - frigate-hass-integration-2.2.0/custom_components/frigate/*
+
+- name: Download frigate-hass-card
+  get_url:
+    url: https://github.com/dermotduffy/frigate-hass-card/releases/latest/download/frigate-hass-card.js
+    dest: /opt/homeassistant/config/local/frigate-hass-card.js
+    mode: '0644'
+
+- name: Download frigate-notify automation
+  get_url:
+    url: https://gist.githubusercontent.com/joebelford/78cef6839618a66f54a4eef067dd6fa9/raw/81513985b679cbefde252720714e2ac1075fb6f9/frigate_notification.yaml
+    dest: /opt/homeassistant/config/blueprints/automation/hunterjm/frigate_notification.yaml
+    mode: '0644'

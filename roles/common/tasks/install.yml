@@ -4,6 +4,7 @@
     name: joe
     groups:
       - sudo
+      - adm
     append: true
 
 - name: no password for sudoers

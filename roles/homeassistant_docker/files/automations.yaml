@@ -1,0 +1,71 @@
+---
+- id: "1637429865852"
+  alias: Notify Me
+  description: ""
+  trigger:
+    - type: motion
+      platform: device
+      device_id: 9470637cfc5bb96c00781b3e77c9b5ee
+      entity_id: binary_sensor.driveway_person_motion
+      domain: binary_sensor
+    - type: motion
+      platform: device
+      device_id: d96468889e5db018fb40d6386d0ebd8f
+      entity_id: binary_sensor.garageentrance_person_motion
+      domain: binary_sensor
+    - type: motion
+      platform: device
+      device_id: 9470637cfc5bb96c00781b3e77c9b5ee
+      entity_id: binary_sensor.driveway_car_motion
+      domain: binary_sensor
+    - type: motion
+      platform: device
+      device_id: d96468889e5db018fb40d6386d0ebd8f
+      entity_id: binary_sensor.garageentrance_car_motion
+      domain: binary_sensor
+  condition: []
+  action:
+    - device_id: ccdffc7c33958c66ed23d36dcef9900b
+      domain: mobile_app
+      type: notify
+      message: Motion detected
+      title: Motion detected
+      data:
+        url: /lovelace-cameras
+    - device_id: 37fce9ab2ed307d36b41921859f8f00e
+      domain: mobile_app
+      type: notify
+      message: Motion detected
+      title: Motion detected
+      data:
+        url: /lovelace-cameras
+  mode: single
+- id: "1637446703288"
+  alias: Notify Joe of Driveway motion
+  description: ""
+  use_blueprint:
+    path: hunterjm/frigate_notification.yaml
+    input:
+      notify_device: ccdffc7c33958c66ed23d36dcef9900b
+      cooldown: 30
+      silence_timer: 30
+      labels:
+        - person
+        - car
+      camera: driveway
+- id: "1637597971306"
+  alias: Notify Joe of garageEntrance motion
+  description: ""
+  use_blueprint:
+    path: hunterjm/frigate_notification.yaml
+    input:
+      camera: garageEntrance
+      notify_device: ccdffc7c33958c66ed23d36dcef9900b
+- id: "1637890455846"
+  alias: Notify ALL_DEVICES for motion
+  description: ""
+  use_blueprint:
+    path: hunterjm/frigate_notification.yaml
+    input:
+      camera: driveway
+      notify_group: ALL_DEVICES
