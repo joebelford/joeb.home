@@ -1,3 +1,0 @@
-- hosts: global_zones
-  roles:
-    - zones
