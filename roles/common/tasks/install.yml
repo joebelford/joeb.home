@@ -1,26 +1,4 @@
 ---
-- name: add joe to sudoers
-  ansible.builtin.user:
-    name: joe
-    groups:
-      - sudo
-      - adm
-    append: true
-
-- name: no password for sudoers
-  lineinfile:
-    path: /etc/sudoers
-    state: present
-    regexp: "^%sudo"
-    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
-    validate: "/usr/sbin/visudo -cf %s"
-
-- name: add authorized key
-  ansible.posix.authorized_key:
-    user: joe
-    key: "{{ authorized_key.key }}"
-    comment: "{{ authorized_key.comment }}"
-
 - name: Add contrib and non-free repos
   apt_repository:
     repo: "{{ item }}"
@@ -52,3 +30,52 @@
     state: latest
     update_cache: true
   when: inventory_hostname_short == 'proliant'
+
+- name: add joe to sudoers
+  ansible.builtin.user:
+    name: joe
+    groups:
+      - sudo
+      - adm
+    append: true
+
+- name: no password for sudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: add authorized key
+  ansible.posix.authorized_key:
+    user: joe
+    key: "{{ lookup('file', item ) }}"
+  with_fileglob:
+    - "*.pub"
+
+- name: configure grub for serial terminal
+  block:
+    - name: Set GRUB_CMDLINE_LINUX
+      ansible.builtin.lineinfile:
+        path: /etc/default/grub
+        state: present
+        regexp: '^GRUB_CMDLINE_LINUX="console=ttyS0,115200n8"$'
+        line: 'GRUB_CMDLINE_LINUX="console=ttyS0,115200n8"'
+
+    - name: Set GRUB_TERMINAL
+      ansible.builtin.lineinfile:
+        path: /etc/default/grub
+        state: present
+        regexp: "^GRUB_TERMINAL=.*"
+        line: 'GRUB_TERMINAL="serial console"'
+
+    - name: Set GRUB_SERIAL_COMMAND
+      ansible.builtin.lineinfile:
+        path: /etc/default/grub
+        state: present
+        regexp: "^GRUB_SERIAL_COMMAND=.*"
+        line: 'GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"'
+  when: inventory_hostname_short == 'proliant'
+  notify: execute grub-mkconfig
+  tags: grub
