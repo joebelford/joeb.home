@@ -32,7 +32,7 @@ lovelace:
 notify: !include notify.yaml
 
 mqtt:
-  broker: 10.0.1.20
+  broker: {{ mqtt_host }}
 
 frigate:
-  url: http://10.0.1.10:5000
+  url: http://{{ frigate_host }}:5000

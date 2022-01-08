@@ -9,7 +9,7 @@
     tty: true
     network_mode: host
     devices:
-      - /dev/dri:/dev/dri
+      - /dev/dri/renderD128:/dev/dri/renderD128
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /opt/homeassistant/config:/config
