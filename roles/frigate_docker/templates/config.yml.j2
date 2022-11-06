@@ -1,5 +1,7 @@
 mqtt:
   host: {{ mqtt_host }}
+  user: {{ mqtt_user }}
+  password: {{ mqtt_user }}
 objects:
   track:
     - person
@@ -17,11 +19,11 @@ cameras:
         - -hwaccel_output_format
         - yuv420p
       inputs:
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.234/ch01/1
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.252/ch01/1
           roles:
             - detect
             - rtmp
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.234/ch01/0
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.252/ch01/0
           roles:
             - record
     detect:
@@ -56,11 +58,11 @@ cameras:
         - -hwaccel_output_format
         - yuv420p
       inputs:
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.218/ch01/1
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.253/ch01/1
           roles:
             - detect
             - rtmp
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.218/ch01/0
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.253/ch01/0
           roles:
             - record
     detect:

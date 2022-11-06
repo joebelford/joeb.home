@@ -15,6 +15,8 @@ all:
     frigate:
       hosts:
         proliant:
+      vars:
+        docker_image: blakeblackshear/frigate:stable
     mosquitto:
       hosts:
         zotac:

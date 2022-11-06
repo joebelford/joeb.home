@@ -2,7 +2,7 @@
 - name: ensure frigate is up
   docker_container:
     name: frigate
-    image: blakeblackshear/frigate:0.10.0-amd64
+    image: "{{ docker_image }}"
     state: started
     tty: true
     devices:
@@ -22,5 +22,7 @@
     env:
       TZ: America/New_York
       FRIGATE_RTSP_PASSWORD: "{{ FRIGATE_RTSP_PASSWORD }}"
+      # LIBVA_DRIVER_NAME: i965 # Not needed
+      DEBIAN_FRONTEND: noninteractive
   async: 1200
   poll: 10

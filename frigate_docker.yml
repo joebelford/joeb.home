@@ -2,4 +2,6 @@
   roles:
     - role: frigate_docker
       vars:
-        mqtt_host: "{{hostvars[groups['mosquitto'][0]].ansible_host }}"
+        # mqtt_host: "{{hostvars[groups['mosquitto'][0]].ansible_host }}"
+        mqtt_host: 10.0.1.250
+        mqtt_user: frigate
