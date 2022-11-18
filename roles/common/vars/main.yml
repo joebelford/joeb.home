@@ -8,6 +8,7 @@ base_packages:
   - avahi-daemon
   - cifs-utils
   - zip
+  - net-tools
 
 debian_repos:
   - deb http://deb.debian.org/debian bullseye main contrib non-free
