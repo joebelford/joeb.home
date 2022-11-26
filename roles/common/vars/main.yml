@@ -10,6 +10,23 @@ base_packages:
   - zip
   - net-tools
 
+dev_packages:
+  - libavahi-compat-libdnssd-dev
+  # - clang
+  - ffmpeg
+  - libavformat-dev
+  - libavcodec-dev
+  - libavutil-dev
+  # - gdb
+  # - git
+  - libavahi-compat-libdnssd-dev
+  - libssl-dev
+  - make
+  # - openssh-server
+  # - perl
+  # - unzip
+  # - wget
+
 debian_repos:
   - deb http://deb.debian.org/debian bullseye main contrib non-free
   - deb-src http://deb.debian.org/debian bullseye main contrib non-free

@@ -11,6 +11,13 @@
     name: "{{ base_packages }}"
     state: latest
 
+- name: install dev packages
+  apt:
+    name: "{{ dev_packages }}"
+    state: latest
+  tags:
+    - dev
+
 - name: Install vainfo package
   apt:
     name: vainfo
