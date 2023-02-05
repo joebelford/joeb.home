@@ -19,13 +19,14 @@ dev_packages:
   - libavutil-dev
   # - gdb
   # - git
-  - libavahi-compat-libdnssd-dev
   - libssl-dev
+  - libcurl4
   - make
   # - openssh-server
   # - perl
   # - unzip
   # - wget
+  - libtinfo5
 
 debian_repos:
   - deb http://deb.debian.org/debian bullseye main contrib non-free

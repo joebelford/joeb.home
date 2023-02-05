@@ -44,6 +44,7 @@
     groups:
       - sudo
       - adm
+      - render
     append: true
 
 - name: no password for sudoers

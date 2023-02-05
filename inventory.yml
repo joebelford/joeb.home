@@ -16,7 +16,7 @@ all:
       hosts:
         proliant:
       vars:
-        docker_image: blakeblackshear/frigate:stable
+        docker_image: ghcr.io/blakeblackshear/frigate:dev-60b2315-tensorrt
     mosquitto:
       hosts:
         zotac:
@@ -26,3 +26,6 @@ all:
     homebridge:
       hosts:
         zotac:
+    unifi:
+      hosts:
+        proliant:

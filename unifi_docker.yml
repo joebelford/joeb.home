@@ -1,0 +1,4 @@
+---
+- hosts: unifi
+  roles:
+    - unifi_docker

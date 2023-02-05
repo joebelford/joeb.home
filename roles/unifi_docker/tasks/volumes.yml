@@ -1,0 +1,11 @@
+---
+- name: Ensure unifi config directory exists
+  ansible.builtin.file:
+    path: /opt/unifi/{{ item }}
+    state: directory
+    recurse: true
+    mode: "0750"
+    owner: 1000
+    group: 1000
+  loop:
+    - config
