@@ -1,30 +1,65 @@
-# yaml-language-server: $schema=http://proliant.local:5000/api/config/schema
+# yaml-language-server: $schema=http://ubuntu-server.home.arpa:5000/api/config/schema.json
 mqtt:
   host: {{ mqtt_host }}
-  user: {{ mqtt_user }}
-  password: {{ mqtt_user }}
+  user: '{FRIGATE_MQTT_USER}'
+  password: '{FRIGATE_MQTT_USER}'
 objects:
   track:
     - person
     - car
     - cat
     - dog
+detect:
+  stationary:
+    interval: 5
+    threshold: 25
+record:
+  enabled: true
+  retain:
+    days: 7
+    mode: motion
+  events:
+    retain:
+      default: 14
+      mode: active_objects
+      objects:
+        dog: 2
+detectors: 
+  ov:
+    type: openvino
+    device: AUTO
+    model:
+      path: /openvino-model/ssdlite_mobilenet_v2.xml
+model:
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+birdseye:
+  enabled: true
+  mode: continuous
+go2rtc:
+  streams:
+    garageEntrance:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.119/ch01/0
+    garageEntrance_sub:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.119/ch01/1
+    driveway:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.187/ch01/0
+    driveway_sub:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.187/ch01/1
 cameras:
   garageEntrance:
     ffmpeg:
-      hwaccel_args:
-        - -hwaccel
-        - vaapi
-        - -hwaccel_device
-        - /dev/dri/renderD128
-        - -hwaccel_output_format
-        - yuv420p
+      hwaccel_args: preset-vaapi
       inputs:
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.252/ch01/1
+        - path: rtsp://127.0.0.1:8554/garageEntrance_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
-            - rtmp
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.252/ch01/0
+        - path: rtsp://127.0.0.1:8554/garageEntrance
+          input_args: preset-rtsp-restream
           roles:
             - record
     detect:
@@ -51,19 +86,14 @@ cameras:
           mask:
             - 519,428,436,417,438,388,535,402
     ffmpeg:
-      hwaccel_args:
-        - -hwaccel
-        - vaapi
-        - -hwaccel_device
-        - /dev/dri/renderD128
-        - -hwaccel_output_format
-        - yuv420p
+      hwaccel_args: preset-vaapi
       inputs:
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.253/ch01/1
+        - path: rtsp://127.0.0.1:8554/driveway_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
-            - rtmp
-        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.253/ch01/0
+        - path: rtsp://127.0.0.1:8554/driveway
+          input_args: preset-rtsp-restream
           roles:
             - record
     detect:
