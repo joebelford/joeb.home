@@ -6,3 +6,4 @@ docker_packages:
   - docker-buildx-plugin
   - docker-compose-plugin
   - docker-compose
+  - python3-pip # needed to install docker-python module for community.docker ansible collection

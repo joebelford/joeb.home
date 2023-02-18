@@ -1,0 +1,39 @@
+---
+- name: Add contrib and non-free repos
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache: true
+  loop: "{{ debian_repos }}"
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ base_packages }}"
+    state: latest
+
+- name: Install dev packages
+  ansible.builtin.apt:
+    name: "{{ dev_packages }}"
+    state: latest
+  tags:
+    - dev
+
+- name: Install vainfo package
+  ansible.builtin.apt:
+    name: vainfo
+    state: latest
+    update_cache: true
+
+- name: Install mesa-va-drivers package
+  ansible.builtin.apt:
+    name: mesa-va-drivers
+    state: latest
+    update_cache: true
+  when: inventory_hostname_short == 'zotac'
+
+- name: Install intel-media-va-driver-non-free package
+  ansible.builtin.apt:
+    name: intel-media-va-driver-non-free
+    state: latest
+    update_cache: true
+  when: inventory_hostname_short == 'proliant'

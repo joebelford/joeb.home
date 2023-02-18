@@ -1,58 +1,18 @@
 ---
-- name: Add contrib and non-free repos
-  ansible.builtin.apt_repository:
-    repo: "{{ item }}"
-    state: present
-    update_cache: true
-  loop: "{{ debian_repos }}"
-
-- name: Install base packages
-  ansible.builtin.apt:
-    name: "{{ base_packages }}"
-    state: latest
-
-- name: Install dev packages
-  ansible.builtin.apt:
-    name: "{{ dev_packages }}"
-    state: latest
-  tags:
-    - dev
-
-- name: Install vainfo package
-  ansible.builtin.apt:
-    name: vainfo
-    state: latest
-    update_cache: true
-
-- name: Install mesa-va-drivers package
-  ansible.builtin.apt:
-    name: mesa-va-drivers
-    state: latest
-    update_cache: true
-  when: inventory_hostname_short == 'zotac'
-
-- name: Install intel-media-va-driver-non-free package
-  ansible.builtin.apt:
-    name: intel-media-va-driver-non-free
-    state: latest
-    update_cache: true
-  when: inventory_hostname_short == 'proliant'
-
 - name: Add joe to sudoers
   ansible.builtin.user:
     name: joe
     groups:
       - sudo
-      - adm
-      - render
     append: true
 
 - name: No password for sudoers
   ansible.builtin.lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: ^%sudo
-    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    regexp: ^(%sudo).*
+    backrefs: true
+    line: '\1 ALL=(ALL:ALL) ALL'
     validate: /usr/sbin/visudo -cf %s
 
 - name: Add authorized key
@@ -62,28 +22,36 @@
   with_fileglob:
     - "*.pub"
 
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ base_packages }}"
+    state: latest
+
 - name: Configure grub for serial terminal
   when: inventory_hostname_short == 'proliant'
   tags: grub
-  notify: execute grub-mkconfig
+  notify: Execute grub-mkconfig
   block:
     - name: Set GRUB_CMDLINE_LINUX
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         state: present
-        regexp: ^GRUB_CMDLINE_LINUX="console=ttyS0,115200n8"$
-        line: GRUB_CMDLINE_LINUX="console=ttyS0,115200n8"
+        regexp: ^\#*(GRUB_CMDLINE_LINUX=).*$
+        line: '\1"console=ttyS0,115200n8"'
+        backrefs: true
 
     - name: Set GRUB_TERMINAL
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         state: present
-        regexp: ^GRUB_TERMINAL=.*
-        line: GRUB_TERMINAL="serial console"
+        regexp: ^\#*(GRUB_TERMINAL=)(.*)$
+        line: '\1"serial \2"'
+        backrefs: true
 
     - name: Set GRUB_SERIAL_COMMAND
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         state: present
-        regexp: ^GRUB_SERIAL_COMMAND=.*
+        backrefs: false # can't use backrefs because line doesn't exist
+        regexp: ^\#*GRUB_SERIAL_COMMAND=.*
         line: GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"
