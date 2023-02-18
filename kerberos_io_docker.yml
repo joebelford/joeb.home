@@ -1,0 +1,5 @@
+---
+- name: Deploy kerberos-io container
+  hosts: kerberos_io_docker,localhost
+  roles:
+    - kerberos_io_docker
