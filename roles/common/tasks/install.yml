@@ -12,7 +12,7 @@
     state: present
     regexp: ^(%sudo).*
     backrefs: true
-    line: '\1 ALL=(ALL:ALL) ALL'
+    line: \1 ALL=(ALL:ALL) ALL
     validate: /usr/sbin/visudo -cf %s
 
 - name: Add authorized key
@@ -37,7 +37,7 @@
         path: /etc/default/grub
         state: present
         regexp: ^\#*(GRUB_CMDLINE_LINUX=).*$
-        line: '\1"console=ttyS0,115200n8"'
+        line: \1"console=ttyS0,115200n8"
         backrefs: true
 
     - name: Set GRUB_TERMINAL
@@ -45,7 +45,7 @@
         path: /etc/default/grub
         state: present
         regexp: ^\#*(GRUB_TERMINAL=)(.*)$
-        line: '\1"serial \2"'
+        line: \1"serial \2"
         backrefs: true
 
     - name: Set GRUB_SERIAL_COMMAND
