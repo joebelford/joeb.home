@@ -1,0 +1,8 @@
+---
+- import_tasks: volumes.yml
+  become: true
+  tags: prometheus_docker
+
+- import_tasks: container.yml
+  become: true
+  tags: prometheus_docker

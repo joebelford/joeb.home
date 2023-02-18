@@ -1,0 +1,25 @@
+---
+- name: Ensure docker image available
+  community.docker.docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+
+- name: Ensure prometheus is up
+  community.docker.docker_container:
+    name: prometheus
+    image: "{{ docker_image }}"
+    state: started
+    tty: true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /var/prometheus:/prometheus
+    restart: true
+    ports:
+      - "9090:9090"
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      TZ: America/New_York
+
+# quay.io/prometheus/prometheus

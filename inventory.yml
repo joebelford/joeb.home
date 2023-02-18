@@ -29,3 +29,6 @@ all:
     unifi:
       hosts:
         proliant:
+    prometheus:
+      hosts:
+        proliant:

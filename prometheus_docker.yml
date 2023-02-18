@@ -1,0 +1,6 @@
+---
+- hosts: prometheus
+  vars:
+    docker_image: quay.io/prometheus/prometheus:latest
+  roles:
+    - prometheus_docker

@@ -1,0 +1,20 @@
+---
+- name: Ensure prometheus opt directory exists
+  file:
+    path: /opt/prometheus
+    state: directory
+    mode: "0755"
+
+- name: Ensure prometheus var directory exists
+  file:
+    path: /var/prometheus
+    state: directory
+    mode: "0755"
+    owner: nobody
+    group: nogroup
+
+- name: deploy config file
+  template:
+    src: prometheus.yml.j2
+    dest: /opt/prometheus/prometheus.yml
+    mode: "0644"
