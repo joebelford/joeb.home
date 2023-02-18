@@ -1,2 +1,3 @@
 ---
-- include: container.yml
+- name: Import container tasks
+  ansible.builtin.import_tasks: container.yml
