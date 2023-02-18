@@ -1,5 +1,6 @@
 ---
-- hosts: frigate
+- name: Deploy Frigate
+  hosts: frigate
   roles:
     - role: frigate_docker
       vars:

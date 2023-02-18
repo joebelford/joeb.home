@@ -1,5 +1,5 @@
 ---
-- name: ensure homebridge is up
+- name: Ensure homebridge is up
   tags: homebridge_docker
   community.docker.docker_container:
     name: homebridge

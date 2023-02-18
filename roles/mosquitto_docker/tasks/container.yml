@@ -1,5 +1,5 @@
 ---
-- name: ensure mosquitto is up
+- name: Ensure mosquitto is up
   community.docker.docker_container:
     name: mosquitto
     image: eclipse-mosquitto

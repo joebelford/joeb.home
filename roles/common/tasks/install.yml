@@ -6,12 +6,12 @@
     update_cache: true
   loop: "{{ debian_repos }}"
 
-- name: install base packages
+- name: Install base packages
   ansible.builtin.apt:
     name: "{{ base_packages }}"
     state: latest
 
-- name: install dev packages
+- name: Install dev packages
   ansible.builtin.apt:
     name: "{{ dev_packages }}"
     state: latest
@@ -38,7 +38,7 @@
     update_cache: true
   when: inventory_hostname_short == 'proliant'
 
-- name: add joe to sudoers
+- name: Add joe to sudoers
   ansible.builtin.user:
     name: joe
     groups:
@@ -47,7 +47,7 @@
       - render
     append: true
 
-- name: no password for sudoers
+- name: No password for sudoers
   ansible.builtin.lineinfile:
     path: /etc/sudoers
     state: present

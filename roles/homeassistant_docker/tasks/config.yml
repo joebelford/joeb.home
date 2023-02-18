@@ -1,5 +1,5 @@
 ---
-- name: ensure config directory
+- name: Ensure config directory
   ansible.builtin.file:
     path: /opt/homeassistant/config
     state: directory
@@ -7,7 +7,7 @@
     owner: root
     group: root
 
-- name: ensure config subdirectories directory
+- name: Ensure config subdirectories directory
   ansible.builtin.file:
     path: /opt/homeassistant/config/{{ item }}
     state: directory
@@ -19,7 +19,7 @@
     - local
     - blueprints/automation/hunterjm
 
-- name: deploy config files
+- name: Deploy config files
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: /opt/homeassistant/config
@@ -35,7 +35,7 @@
     - scenes.yaml
     - notify.yaml
 
-- name: deploy configuration template
+- name: Deploy configuration template
   ansible.builtin.template:
     src: configuration.yaml.j2
     dest: /opt/homeassistant/config/configuration.yaml
@@ -43,7 +43,7 @@
     owner: root
     group: root
 
-- name: deploy secrets
+- name: Deploy secrets
   ansible.builtin.template:
     src: secrets.yaml.j2
     dest: /opt/homeassistant/config/secrets.yaml
@@ -51,7 +51,7 @@
     owner: root
     group: root
 
-- name: get latest hass integration
+- name: Get latest hass integration
   ansible.builtin.unarchive:
     src: https://github.com/blakeblackshear/frigate-hass-integration/archive/refs/tags/v2.2.0.zip
     dest: /opt/homeassistant/config/custom_components/frigate

@@ -1,6 +1,8 @@
 ---
-- ansible.builtin.import_tasks: volumes.yml
+- name: Import volume tasks
+  ansible.builtin.import_tasks: volumes.yml
   become: true
   tags: mosquitto_docker
-- ansible.builtin.import_tasks: container.yml
+- name: Import container tasks
+  ansible.builtin.import_tasks: container.yml
   tags: mosquitto_docker

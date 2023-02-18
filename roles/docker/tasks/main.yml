@@ -1,3 +1,4 @@
 ---
-- ansible.builtin.import_tasks: install.yml
+- name: Import install tasks
+  ansible.builtin.import_tasks: install.yml
   become: true

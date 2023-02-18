@@ -13,7 +13,7 @@
     owner: nobody
     group: nogroup
 
-- name: deploy config file
+- name: Deploy config file
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: /opt/prometheus/prometheus.yml

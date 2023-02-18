@@ -1,5 +1,5 @@
 ---
-- name: ensure zwavejs2mqtt directory exists
+- name: Ensure zwavejs2mqtt directory exists
   ansible.builtin.file:
     path: /opt/zwavejs2mqtt
     state: directory
@@ -7,7 +7,7 @@
     # owner: 1883
     # group: 1883
 
-- name: ensure zwavejs2mqtt store directory exists
+- name: Ensure zwavejs2mqtt store directory exists
   ansible.builtin.file:
     path: /opt/zwavejs2mqtt/store
     state: directory

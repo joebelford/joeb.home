@@ -1,4 +1,6 @@
 ---
-- ansible.builtin.import_tasks: configure.yml
+- name: Import configure tasks
+  ansible.builtin.import_tasks: configure.yml
   become: true
-- ansible.builtin.import_tasks: container.yml
+- name: Import container tasks
+  ansible.builtin.import_tasks: container.yml

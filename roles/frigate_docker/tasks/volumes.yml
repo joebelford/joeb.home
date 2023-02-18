@@ -1,17 +1,17 @@
 ---
-- name: ensure frigate directory exists
+- name: Ensure frigate directory exists
   ansible.builtin.file:
     path: /media/frigate
     state: directory
     mode: "0750"
 
-- name: ensure frigate directory exists
+- name: Ensure frigate directory exists
   ansible.builtin.file:
     path: /opt/frigate
     state: directory
     mode: "0750"
 
-- name: deploy config file
+- name: Deploy config file
   ansible.builtin.template:
     src: config.yml.j2
     dest: /opt/frigate/config.yml

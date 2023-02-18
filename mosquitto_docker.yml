@@ -1,4 +1,5 @@
 ---
-- hosts: mosquitto
+- name: Deploy mosquitto
+  hosts: mosquitto
   roles:
     - mosquitto_docker

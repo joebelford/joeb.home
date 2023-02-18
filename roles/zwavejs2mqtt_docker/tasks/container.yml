@@ -1,5 +1,5 @@
 ---
-- name: ensure zwavejs2mqtt is up
+- name: Ensure zwavejs2mqtt is up
   tags: zwavejs2mqtt_docker
   community.docker.docker_container:
     name: zwavejs2mqtt

@@ -1,5 +1,6 @@
 ---
-- hosts: homeassistant
+- name: Deploy homeassistant
+  hosts: homeassistant
   roles:
     - role: homeassistant_docker
       vars:

@@ -1,4 +1,5 @@
 ---
-- hosts: zwavejs2mqtt_docker,localhost
+- name: Deploy zwavejs2mqtt
+  hosts: zwavejs2mqtt_docker,localhost
   roles:
     - zwavejs2mqtt_docker

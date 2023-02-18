@@ -1,5 +1,5 @@
 ---
-- name: ensure mosquitto directory exists
+- name: Ensure mosquitto directory exists
   ansible.builtin.file:
     path: /opt/mosquitto
     state: directory
@@ -7,7 +7,7 @@
     owner: 1883
     group: 1883
 
-- name: ensure mosquitto log directory exists
+- name: Ensure mosquitto log directory exists
   ansible.builtin.file:
     path: /opt/mosquitto/{{ item }}
     state: directory
@@ -19,7 +19,7 @@
     - data
     - config
 
-- name: ensure config file
+- name: Ensure config file
   ansible.builtin.copy:
     src: mosquitto.conf
     dest: /opt/mosquitto/config/mosquitto.conf

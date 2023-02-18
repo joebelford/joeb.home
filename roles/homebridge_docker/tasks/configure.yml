@@ -1,5 +1,5 @@
 ---
-- name: ensure homebridge directory
+- name: Ensure homebridge directory
   ansible.builtin.file:
     path: /opt/homebridge
     state: directory

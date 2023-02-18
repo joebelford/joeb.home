@@ -1,5 +1,5 @@
 ---
-- name: ensure homeassistant is up
+- name: Ensure homeassistant is up
   tags: homeassistant_docker
   community.docker.docker_container:
     name: home-assistant
