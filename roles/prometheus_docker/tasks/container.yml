@@ -16,7 +16,7 @@
       - /var/prometheus:/prometheus
     restart: true
     ports:
-      - "9090:9090"
+      - 9090:9090
     pull: true
     restart_policy: unless-stopped
     env:

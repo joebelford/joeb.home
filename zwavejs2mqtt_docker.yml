@@ -1,3 +1,4 @@
+---
 - hosts: zwavejs2mqtt_docker,localhost
   roles:
     - zwavejs2mqtt_docker

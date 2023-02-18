@@ -1,3 +1,4 @@
+---
 - hosts: homeassistant
   roles:
     - role: homeassistant_docker

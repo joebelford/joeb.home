@@ -1,3 +1,4 @@
+---
 - hosts: frigate
   roles:
     - role: frigate_docker

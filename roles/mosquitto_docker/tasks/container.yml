@@ -13,8 +13,8 @@
       - /opt/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
     privileged: false
     ports:
-      - "1883:1883"
-      - "9001:9001"
+      - 1883:1883
+      - 9001:9001
     pull: true
     restart_policy: unless-stopped
     env:

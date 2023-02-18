@@ -1,5 +1,6 @@
-  - name: Home
-    latitude: !secret zones_home_latitude
-    longitude: !secret zones_home_longitude
-    radius: 100
-    icon: mdi:account-multiple
+---
+- name: Home
+  latitude: !secret zones_home_latitude
+  longitude: !secret zones_home_longitude
+  radius: 100
+  icon: mdi:account-multiple

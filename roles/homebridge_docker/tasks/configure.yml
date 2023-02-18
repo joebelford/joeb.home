@@ -3,6 +3,6 @@
   file:
     path: /opt/homebridge
     state: directory
-    mode: '0750'
+    mode: "0750"
     owner: 8581
     group: 8581
