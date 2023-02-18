@@ -1,27 +1,26 @@
 ---
-  - name: ensure openhab is up
-    tags: openhab_docker
-    docker_container:
-      name: openhab
-      image: openhab/openhab
-      state: started
-      detach: yes
-      interactive: yes
-      tty: yes
-      ports:
-        - 8080:8080
-        - 8101:8101
-        - 5007:5007
-      volumes:
-        - /etc/localtime:/etc/localtime:ro
-        - /etc/timezone:/etc/timezone:ro
-        - /opt/openhab/addons:/openhab/addons:rw
-        - /opt/openhab/conf:/openhab/conf:rw
-        - /opt/openhab/userdata:/openhab/userdata:rw
-      keep_volumes: yes
-      hostname: openhab.localnet
-      memory: 512m
-      pull: true
-      restart_policy: unless-stopped
-      env:
-        EXTRA_JAVA_OPTS="-Duser.timezone=America/New_York"
+- name: Ensure openhab is up
+  tags: openhab_docker
+  community.docker.docker_container:
+    name: openhab
+    image: openhab/openhab
+    state: started
+    detach: true
+    interactive: true
+    tty: true
+    ports:
+      - 8080:8080
+      - 8101:8101
+      - 5007:5007
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /opt/openhab/addons:/openhab/addons:rw
+      - /opt/openhab/conf:/openhab/conf:rw
+      - /opt/openhab/userdata:/openhab/userdata:rw
+    keep_volumes: true
+    hostname: openhab.localnet
+    memory: 512m
+    pull: true
+    restart_policy: unless-stopped
+    env: EXTRA_JAVA_OPTS="-Duser.timezone=America/New_York"

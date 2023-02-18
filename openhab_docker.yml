@@ -1,3 +1,5 @@
-- hosts: openhab_docker,localhost
+---
+- name: Deploy openhab container
+  hosts: openhab_docker,localhost
   roles:
     - openhab_docker
