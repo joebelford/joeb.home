@@ -1,7 +1,7 @@
 ---
 - name: ensure zwavejs2mqtt is up
   tags: zwavejs2mqtt_docker
-  docker_container:
+  community.docker.docker_container:
     name: zwavejs2mqtt
     image: zwavejs/zwavejs2mqtt:latest
     state: started

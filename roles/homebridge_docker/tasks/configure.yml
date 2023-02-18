@@ -1,6 +1,6 @@
 ---
 - name: ensure homebridge directory
-  file:
+  ansible.builtin.file:
     path: /opt/homebridge
     state: directory
     mode: "0750"

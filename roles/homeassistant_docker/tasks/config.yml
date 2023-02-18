@@ -1,6 +1,6 @@
 ---
 - name: ensure config directory
-  file:
+  ansible.builtin.file:
     path: /opt/homeassistant/config
     state: directory
     mode: "0755"
@@ -8,7 +8,7 @@
     group: root
 
 - name: ensure config subdirectories directory
-  file:
+  ansible.builtin.file:
     path: /opt/homeassistant/config/{{ item }}
     state: directory
     mode: "0755"
@@ -20,7 +20,7 @@
     - blueprints/automation/hunterjm
 
 - name: deploy config files
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /opt/homeassistant/config
     mode: 0644
@@ -36,7 +36,7 @@
     - notify.yaml
 
 - name: deploy configuration template
-  template:
+  ansible.builtin.template:
     src: configuration.yaml.j2
     dest: /opt/homeassistant/config/configuration.yaml
     mode: 0644
@@ -44,7 +44,7 @@
     group: root
 
 - name: deploy secrets
-  template:
+  ansible.builtin.template:
     src: secrets.yaml.j2
     dest: /opt/homeassistant/config/secrets.yaml
     mode: 0640
@@ -62,13 +62,13 @@
       - frigate-hass-integration-2.2.0/custom_components/frigate/*
 
 - name: Download frigate-hass-card
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/dermotduffy/frigate-hass-card/releases/latest/download/frigate-hass-card.js
     dest: /opt/homeassistant/config/local/frigate-hass-card.js
     mode: "0644"
 
 - name: Download frigate-notify automation
-  get_url:
+  ansible.builtin.get_url:
     url: https://gist.githubusercontent.com/joebelford/78cef6839618a66f54a4eef067dd6fa9/raw/81513985b679cbefde252720714e2ac1075fb6f9/frigate_notification.yaml
     dest: /opt/homeassistant/config/blueprints/automation/hunterjm/frigate_notification.yaml
     mode: "0644"

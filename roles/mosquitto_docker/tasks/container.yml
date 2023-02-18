@@ -1,6 +1,6 @@
 ---
 - name: ensure mosquitto is up
-  docker_container:
+  community.docker.docker_container:
     name: mosquitto
     image: eclipse-mosquitto
     state: started

@@ -1,7 +1,7 @@
 ---
 - name: ensure homeassistant is up
   tags: homeassistant_docker
-  docker_container:
+  community.docker.docker_container:
     name: home-assistant
     image: homeassistant/home-assistant:stable
     state: started

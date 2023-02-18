@@ -1,38 +1,38 @@
 ---
 - name: Add contrib and non-free repos
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ item }}"
     state: present
     update_cache: true
   loop: "{{ debian_repos }}"
 
 - name: install base packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ base_packages }}"
     state: latest
 
 - name: install dev packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ dev_packages }}"
     state: latest
   tags:
     - dev
 
 - name: Install vainfo package
-  apt:
+  ansible.builtin.apt:
     name: vainfo
     state: latest
     update_cache: true
 
 - name: Install mesa-va-drivers package
-  apt:
+  ansible.builtin.apt:
     name: mesa-va-drivers
     state: latest
     update_cache: true
   when: inventory_hostname_short == 'zotac'
 
 - name: Install intel-media-va-driver-non-free package
-  apt:
+  ansible.builtin.apt:
     name: intel-media-va-driver-non-free
     state: latest
     update_cache: true
@@ -48,7 +48,7 @@
     append: true
 
 - name: no password for sudoers
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/sudoers
     state: present
     regexp: ^%sudo

@@ -1,7 +1,7 @@
 ---
-- import_tasks: volumes.yml
+- ansible.builtin.import_tasks: volumes.yml
   become: true
   tags: frigate_docker
 
-- import_tasks: container.yml
+- ansible.builtin.import_tasks: container.yml
   tags: frigate_docker

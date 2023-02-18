@@ -1,6 +1,6 @@
 ---
 - name: ensure mosquitto directory exists
-  file:
+  ansible.builtin.file:
     path: /opt/mosquitto
     state: directory
     mode: "0750"
@@ -8,7 +8,7 @@
     group: 1883
 
 - name: ensure mosquitto log directory exists
-  file:
+  ansible.builtin.file:
     path: /opt/mosquitto/{{ item }}
     state: directory
     mode: "0750"
@@ -20,7 +20,7 @@
     - config
 
 - name: ensure config file
-  copy:
+  ansible.builtin.copy:
     src: mosquitto.conf
     dest: /opt/mosquitto/config/mosquitto.conf
     mode: "0640"

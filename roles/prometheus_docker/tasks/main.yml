@@ -1,8 +1,8 @@
 ---
-- import_tasks: volumes.yml
+- ansible.builtin.import_tasks: volumes.yml
   become: true
   tags: prometheus_docker
 
-- import_tasks: container.yml
+- ansible.builtin.import_tasks: container.yml
   become: true
   tags: prometheus_docker

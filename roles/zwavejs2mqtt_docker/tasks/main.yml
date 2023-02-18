@@ -1,6 +1,6 @@
 ---
-- import_tasks: volumes.yml
+- ansible.builtin.import_tasks: volumes.yml
   become: true
   tags: zwavejs2mqtt_docker
-- import_tasks: container.yml
+- ansible.builtin.import_tasks: container.yml
   tags: zwavejs2mqtt_docker
