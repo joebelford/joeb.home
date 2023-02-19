@@ -8,12 +8,12 @@
 
 - name: Install base packages
   ansible.builtin.apt:
-    name: "{{ base_packages }}"
+    name: "{{ debian_base_packages }}"
     state: latest
 
 - name: Install dev packages
   ansible.builtin.apt:
-    name: "{{ dev_packages }}"
+    name: "{{ debian_dev_packages }}"
     state: latest
   tags:
     - dev
@@ -36,4 +36,4 @@
     name: intel-media-va-driver-non-free
     state: latest
     update_cache: true
-  when: inventory_hostname_short == 'proliant'
+  when: ansible_chassis_vendor == 'HPE'

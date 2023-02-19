@@ -28,7 +28,7 @@
     state: latest
 
 - name: Configure grub for serial terminal
-  when: inventory_hostname_short == 'proliant'
+  when: ansible_chassis_vendor == 'HPE'
   tags: grub
   notify: Execute grub-mkconfig
   block:

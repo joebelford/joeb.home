@@ -2,5 +2,10 @@
 - name: Import install tasks
   ansible.builtin.import_tasks: install.yml
   become: true
-  # become_method: su
-  # become_flags: "-"
+
+- name: Import Debian install tasks
+  when: ansible_distribution |lower == 'debian'
+  ansible.builtin.import_tasks: install_debian.yml
+  become: true
+  become_method: su
+  become_flags: "-"

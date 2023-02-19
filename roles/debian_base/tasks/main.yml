@@ -1,6 +1,0 @@
----
-- name: Import install tasks
-  ansible.builtin.import_tasks: install.yml
-  become: true
-  become_method: su
-  become_flags: "-"
