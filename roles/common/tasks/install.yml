@@ -1,4 +1,9 @@
 ---
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ base_packages }}"
+    state: latest
+
 - name: Add joe to sudoers
   ansible.builtin.user:
     name: joe
@@ -21,11 +26,6 @@
     key: "{{ lookup('file', item) }}" # noqa jinja[spacing]
   with_fileglob:
     - "*.pub"
-
-- name: Install base packages
-  ansible.builtin.apt:
-    name: "{{ base_packages }}"
-    state: latest
 
 - name: Configure grub for serial terminal
   when: ansible_chassis_vendor == 'HPE'
