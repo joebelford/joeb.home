@@ -1,0 +1,24 @@
+---
+- name: Ensure prometheus opt directory exists
+  ansible.builtin.file:
+    path: /opt/fluentbit
+    state: directory
+    mode: "0755"
+
+# - name: Deploy config file
+#   ansible.builtin.copy:
+#     src: fluent-bit.yaml
+#     dest: /opt/fluentbit/fluent-bit.yaml
+#     mode: "0644"
+
+- name: Deploy config file
+  ansible.builtin.copy:
+    src: fluent-bit.conf
+    dest: /opt/fluentbit/fluent-bit.conf
+    mode: "0644"
+
+# - name: Deploy parsers file
+#   ansible.builtin.copy:
+#     src: parsers.conf
+#     dest: /opt/fluentbit/parsers.conf
+#     mode: "0644"

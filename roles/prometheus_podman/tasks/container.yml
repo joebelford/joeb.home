@@ -1,0 +1,20 @@
+---
+- name: Ensure prometheus image available
+  containers.podman.podman_image:
+    name: "{{ prometheus_image }}"
+
+- name: Ensure prometheus is up
+  containers.podman.podman_container:
+    name: prometheus
+    image: "{{ prometheus_image }}"
+    state: started
+    tty: true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /var/prometheus:/prometheus:z
+    ports:
+      - 19090:9090
+    restart_policy: unless-stopped
+    env:
+      TZ: America/New_York

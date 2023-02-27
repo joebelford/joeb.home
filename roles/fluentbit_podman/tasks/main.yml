@@ -1,0 +1,11 @@
+---
+# tasks file for fluentbit_podman
+- name: Import volume tasks
+  ansible.builtin.import_tasks: volumes.yml
+  become: true
+  tags: fluentbit_podman
+
+- name: Import container tasks
+  ansible.builtin.import_tasks: container.yml
+  become: true
+  tags: fluentbit_podman

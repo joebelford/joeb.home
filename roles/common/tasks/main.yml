@@ -6,6 +6,20 @@
   become_method: su
   become_flags: "-"
 
+- name: Import Ubuntu install tasks
+  when: ansible_distribution |lower == 'debian'
+  ansible.builtin.import_tasks: install_debian.yml
+  become: true
+  become_method: su
+  become_flags: "-"
+
+- name: Import Fedora install tasks
+  when: ansible_distribution |lower == 'fedora'
+  ansible.builtin.import_tasks: install_fedora.yml
+  become: true
+  # become_method: su
+  # become_flags: "-"
+
 - name: Import install tasks
   ansible.builtin.import_tasks: install.yml
   become: true

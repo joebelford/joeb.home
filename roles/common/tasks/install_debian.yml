@@ -37,3 +37,19 @@
     state: latest
     update_cache: true
   when: ansible_chassis_vendor == 'HPE'
+
+- name: Add joe to sudoers
+  ansible.builtin.user:
+    name: joe
+    groups:
+      - sudo
+    append: true
+
+- name: No password for sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: ^(%sudo).*
+    backrefs: true
+    line: \1 ALL=(ALL:ALL) ALL
+    validate: /usr/sbin/visudo -cf %s

@@ -1,0 +1,31 @@
+---
+- name: Add joe to sudoers
+  ansible.builtin.user:
+    name: joe
+    groups:
+      - wheel
+    append: true
+
+- name: Allow wheel for sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: ^(%wheel).*
+    backrefs: true
+    line: \1 ALL=(ALL) ALL
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Upgrade all packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+# Not needed as podman is installed on build.
+# - name: Install base packages
+#   ansible.builtin.dnf:
+#     name: "{{ fedora_base_packages }}"
+#     state: latest
+
+- name: Autoremove unneeded packages installed as dependencies
+  ansible.builtin.dnf:
+    autoremove: true

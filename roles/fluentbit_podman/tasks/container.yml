@@ -1,0 +1,23 @@
+---
+- name: Ensure fluentbit image available
+  containers.podman.podman_image:
+    name: "{{ fluentbit_image }}"
+
+- name: Ensure fluentbit is up
+  containers.podman.podman_container:
+    name: fluent-bit
+    image: "{{ fluentbit_image }}"
+    state: started
+    tty: true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      # - /opt/fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf:ro
+    ports:
+      - 5140:5140
+      - 2020:2020
+    restart_policy: unless-stopped
+    env:
+      TZ: America/New_York
+      GF_LOKI_USER: "{{ grafana_cred.loki_username }}"
+      GF_TOKEN: "{{ grafana_cred.token }}"

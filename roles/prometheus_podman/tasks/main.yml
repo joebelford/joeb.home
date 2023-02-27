@@ -1,0 +1,10 @@
+---
+- name: Import volume tasks
+  ansible.builtin.import_tasks: volumes.yml
+  become: true
+  tags: prometheus_podman
+
+- name: Import container tasks
+  ansible.builtin.import_tasks: container.yml
+  become: true
+  tags: prometheus_podman

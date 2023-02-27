@@ -1,0 +1,14 @@
+---
+service:
+  parsers_file: parsers.conf
+pipeline:
+  inputs:
+    - name: syslog
+      tag: syslog
+      parser: syslog-rfc3164
+      listen: "0.0.0.0"
+      port: 5140
+      mode: udp
+  outputs:
+    - name: stdout
+      match: "*"

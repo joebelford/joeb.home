@@ -2,7 +2,7 @@
 all:
   hosts:
     zotac:
-      ansible_host: 10.0.1.20
+      ansible_host: zotac.home.arpa
     proliant:
       ansible_host: ubuntu-server.home.arpa
   vars:
@@ -32,3 +32,8 @@ all:
     prometheus:
       hosts:
         proliant:
+        zotac:
+    fluentbit:
+      hosts:
+        proliant:
+        zotac:

@@ -1,0 +1,2 @@
+---
+prometheus_image: quay.io/prometheus/prometheus:latest

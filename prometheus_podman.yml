@@ -1,0 +1,7 @@
+---
+- name: Deploy prometheus
+  hosts: prometheus
+  vars:
+    prometheus_image: quay.io/prometheus/prometheus:latest
+  roles:
+    - prometheus_podman
