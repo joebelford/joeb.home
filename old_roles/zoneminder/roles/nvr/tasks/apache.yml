@@ -1,8 +1,8 @@
 ---
 - name: enable zoneminder conf
-  command: a2enconf zoneminder 
+  command: a2enconf zoneminder
   tags: apache
- 
+
 - name: enable module
   apache2_module:
     state: present
