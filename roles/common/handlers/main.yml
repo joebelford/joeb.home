@@ -1,3 +1,4 @@
 ---
 - name: Execute grub-mkconfig
   ansible.builtin.command: /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
+  become: true

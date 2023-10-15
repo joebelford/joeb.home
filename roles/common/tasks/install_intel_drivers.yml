@@ -1,0 +1,7 @@
+---
+- name: Install intel-media-va-driver-non-free package
+  when: ansible_chassis_vendor == 'HPE'
+  ansible.builtin.apt:
+    name: "{{ intel_driver_pkgs }}"
+    state: latest
+    update_cache: true

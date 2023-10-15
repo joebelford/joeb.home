@@ -6,6 +6,22 @@
   with_fileglob:
     - "*.pub"
 
+- name: Add joe to sudoers
+  ansible.builtin.user:
+    name: joe
+    groups:
+      - sudo
+    append: true
+
+- name: No password for sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: ^(%sudo).*
+    backrefs: true
+    line: \1 ALL=(ALL:ALL) ALL
+    validate: /usr/sbin/visudo -cf %s
+
 - name: Configure grub for serial terminal
   when: ansible_chassis_vendor == 'HPE'
   tags: grub
@@ -24,7 +40,7 @@
         path: /etc/default/grub
         state: present
         regexp: ^\#*(GRUB_TERMINAL=)(.*)$
-        line: \1"serial \2"
+        line: \1"serial console"
         backrefs: true
 
     - name: Set GRUB_SERIAL_COMMAND

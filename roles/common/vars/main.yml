@@ -34,6 +34,18 @@ debian_dev_packages:
 # - wget
 # - libtinfo5
 
+intel_driver_pkgs:
+  - intel-media-va-driver-non-free
+  - intel-opencl-icd
+  # - intel-level-zero-gpu
+  # - level-zero
+  - libmfx1
+
+nvidia_driver_pkgs:
+  - nvidia-340
+  - vainfo
+  - mesa-va-drivers
+
 debian_repos:
   - deb http://deb.debian.org/debian bullseye main contrib non-free
   - deb-src http://deb.debian.org/debian bullseye main contrib non-free

@@ -4,7 +4,7 @@ all:
     zotac:
       ansible_host: zotac.home.arpa
     proliant:
-      ansible_host: ubuntu-server.home.arpa
+      ansible_host: proliant.home.arpa
   vars:
     ansible_user: joe
   children:

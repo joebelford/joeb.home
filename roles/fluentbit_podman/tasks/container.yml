@@ -18,6 +18,6 @@
       - 2020:2020
     restart_policy: unless-stopped
     env:
-      TZ: America/New_York
+      TZ: US/Eastern
       GF_LOKI_USER: "{{ grafana_cred.loki_username }}"
       GF_TOKEN: "{{ grafana_cred.token }}"

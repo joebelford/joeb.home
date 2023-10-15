@@ -1,0 +1,108 @@
+# yaml-language-server: $schema=http://ubuntu-server.home.arpa:5000/api/config/schema.json
+mqtt:
+  host: {{ mqtt_host }}
+  user: '{FRIGATE_MQTT_USER}'
+  password: '{FRIGATE_MQTT_USER}'
+objects:
+  track:
+    - person
+    - car
+    - cat
+    - dog
+detect:
+  stationary:
+    interval: 5
+    threshold: 25
+record:
+  enabled: true
+  retain:
+    days: 7
+    mode: motion
+  events:
+    retain:
+      default: 14
+      mode: active_objects
+      objects:
+        dog: 2
+detectors: 
+  ov:
+    type: openvino
+    device: AUTO
+    model:
+      path: /openvino-model/ssdlite_mobilenet_v2.xml
+model:
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+birdseye:
+  enabled: true
+  mode: continuous
+go2rtc:
+  streams:
+    garageEntrance:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.119/ch01/0
+    garageEntrance_sub:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.119/ch01/1
+    driveway:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.187/ch01/0
+    driveway_sub:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.187/ch01/1
+cameras:
+  garageEntrance:
+    ffmpeg:
+      hwaccel_args: preset-vaapi
+      inputs:
+        - path: rtsp://127.0.0.1:8554/garageEntrance_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/garageEntrance
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+    detect:
+      width: 640
+      height: 480
+    record:
+      enabled: True
+    snapshots:
+      enabled: True
+  driveway:
+    motion:
+      mask:
+        - 599,293,640,325,640,480,481,480
+        - 640,0,179,0,180,21,640,171
+    zones:
+      zone_0:
+        coordinates: 593,173,640,322,474,480,84,480,0,159,350,123
+    objects:
+      filters:
+        car:
+          mask:
+            - 104,72,225,32,342,122,263,125
+        person:
+          mask:
+            - 519,428,436,417,438,388,535,402
+    ffmpeg:
+      hwaccel_args: preset-vaapi
+      inputs:
+        - path: rtsp://127.0.0.1:8554/driveway_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/driveway
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+    detect:
+      width: 640
+      height: 480
+    record:
+      enabled: True
+      events:
+        required_zones:
+          - zone_0
+    snapshots:
+      enabled: True

@@ -1,0 +1,9 @@
+---
+- name: Import volume tasks
+  ansible.builtin.import_tasks: volumes.yml
+  become: true
+  tags: frigate_docker
+
+- name: Import container tasks
+  ansible.builtin.import_tasks: container.yml
+  tags: frigate_docker

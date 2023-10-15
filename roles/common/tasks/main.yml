@@ -7,11 +7,9 @@
   become_flags: "-"
 
 - name: Import Ubuntu install tasks
-  when: ansible_distribution |lower == 'debian'
-  ansible.builtin.import_tasks: install_debian.yml
+  when: ansible_distribution |lower == 'ubuntu'
+  ansible.builtin.import_tasks: install_ubuntu.yml
   become: true
-  become_method: su
-  become_flags: "-"
 
 - name: Import Fedora install tasks
   when: ansible_distribution |lower == 'fedora'
@@ -22,4 +20,14 @@
 
 - name: Import install tasks
   ansible.builtin.import_tasks: install.yml
+  become: true
+
+- name: Import install intel drivers
+  when: inventory_hostname_short == 'proliant'
+  ansible.builtin.import_tasks: install_intel_drivers.yml
+  become: true
+
+- name: Import install nvidia drivers
+  when: inventory_hostname_short == 'zotac'
+  ansible.builtin.import_tasks: install_nvidia_drivers.yml
   become: true

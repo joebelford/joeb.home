@@ -1,0 +1,12 @@
+---
+- name: Add nvidia-legacy repo
+  ansible.builtin.apt_repository:
+    repo: ppa:kelebek333/nvidia-legacy
+    state: present
+    update_cache: true
+
+- name: Install nvidia drivers
+  ansible.builtin.apt:
+    name: "{{ nvidia_driver_pkgs }}"
+    state: latest
+    update_cache: true
