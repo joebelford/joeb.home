@@ -1,5 +1,6 @@
 ---
 - name: Install nfs server package
+  become: true
   ansible.builtin.package:
     name: nfs-kernel-server
     state: present
