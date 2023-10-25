@@ -15,3 +15,9 @@
     group: nogroup
     path: /srv/nfs
     mode: "0777"
+
+- name: Update exports file
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    line: /srv/nfs 10.0.0.0/24(rw,sync,no_subtree_check)
