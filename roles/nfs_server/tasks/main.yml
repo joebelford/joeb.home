@@ -8,6 +8,7 @@
     - Restart nfs server
 
 - name: Create export path
+  become: true
   ansible.builtin.file:
     state: directory
     owner: nobody
