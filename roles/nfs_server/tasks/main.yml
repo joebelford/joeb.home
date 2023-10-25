@@ -1,0 +1,15 @@
+---
+- name: Install nfs server package
+  ansible.builtin.package:
+    name: nfs-kernel-server
+    state: present
+  notify:
+    - Restart nfs server
+
+- name: Create export path
+  ansible.builtin.file:
+    state: directory
+    owner: nobody
+    group: nogroup
+    path: /srv/nfs
+    mode: "0777"

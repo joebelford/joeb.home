@@ -1,0 +1,5 @@
+---
+- name: Deploy nfs server
+  hosts: proliant
+  roles:
+    - nfs_server
