@@ -1,22 +1,22 @@
 ---
 - name: Update repositories cache and install "zoneminder" package
-  apt:
+  ansible.builtin.apt:
     name: zoneminder
-    update_cache: yes
+    update_cache: true
 
 - name: Add the user
-  user:
+  ansible.builtin.user:
     name: www-data
     comment: www-data user
     group: www-data
     groups:
       - video
       - render
-    append: yes
+    append: true
     state: present
 
-- name: enable zoneminder service
-  systemd:
+- name: Enable zoneminder service
+  ansible.builtin.systemd:
     name: zoneminder
     state: started
-    enabled: yes
+    enabled: true

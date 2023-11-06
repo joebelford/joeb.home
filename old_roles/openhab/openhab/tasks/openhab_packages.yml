@@ -1,7 +1,7 @@
 ---
 - name: Install openhab packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ openhab_packages }}"
     state: latest
-    update_cache: yes
+    update_cache: true
   tags: openhab_packages

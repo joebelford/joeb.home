@@ -1,3 +1,3 @@
 ---
-- include: base_packages.yml
-- include: ffmpeg_packages.yml
+- ansible.builtin._include: base_packages.yml
+- ansible.builtin._include: ffmpeg_packages.yml

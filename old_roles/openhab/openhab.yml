@@ -1,3 +1,4 @@
+---
 - hosts: openhab,localhost
   roles:
     - openhab

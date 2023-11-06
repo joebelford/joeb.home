@@ -1,9 +1,9 @@
 ---
-- name: enable zoneminder conf
-  command: a2enconf zoneminder
+- name: Enable zoneminder conf
+  ansible.builtin.command: a2enconf zoneminder
   tags: apache
 
-- name: enable module
+- name: Enable module
   apache2_module:
     state: present
     name: "{{ item }}"
@@ -11,7 +11,7 @@
   tags: apache
 
 - name: Reload apache2 service
-  systemd:
+  ansible.builtin.systemd:
     name: apache2
     state: reloaded
   tags: apache

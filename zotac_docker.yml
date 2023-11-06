@@ -15,7 +15,8 @@
       - python3-apt
 
     authorized_key:
-      key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAmKH3riQOx30KqVLYtffZ1st9ihcvQPys93KtWmUR7UI8u4PX3qLU28QjvjaRgyn+vYGi9KR14HmNxs0wEaho2u/ImESQEgZawWElyBIISKudWXD2+x3FolITxfiM4+fhGVN+UAymL81F6YBZsKs2TM8bRd33XkgUlcDpMyBWfBU= # noqa yaml[line-length]
+      key: ssh-rsa 
+        AAAAB3NzaC1yc2EAAAABIwAAAIEAmKH3riQOx30KqVLYtffZ1st9ihcvQPys93KtWmUR7UI8u4PX3qLU28QjvjaRgyn+vYGi9KR14HmNxs0wEaho2u/ImESQEgZawWElyBIISKudWXD2+x3FolITxfiM4+fhGVN+UAymL81F6YBZsKs2TM8bRd33XkgUlcDpMyBWfBU= # noqa yaml[line-length]
       comment: joebelford@joe-belfords-computer.local
 
   tasks:

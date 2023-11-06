@@ -1,7 +1,7 @@
 ---
 - name: Install base packages for development workstation
-  apt:
+  ansible.builtin.apt:
     name: "{{ ffmpeg_packages }}"
     state: latest
-    update_cache: yes
+    update_cache: true
   tags: ffmpeg_packages

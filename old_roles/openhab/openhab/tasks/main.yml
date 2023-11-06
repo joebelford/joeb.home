@@ -1,3 +1,3 @@
 ---
-- include: repos.yml
-- include: openhab_packages.yml
+- ansible.builtin._include: repos.yml
+- ansible.builtin._include: openhab_packages.yml

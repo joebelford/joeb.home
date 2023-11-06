@@ -1,9 +1,9 @@
 ---
-- name: configure date time in php.ini
+- name: Configure date time in php.ini
   ini_file:
     path: /etc/php/7.3/apache2/php.ini
     section: Date
     option: date.timezone
     value: America/New_York
-    backup: yes
+    backup: true
   tags: config

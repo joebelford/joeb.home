@@ -1,7 +1,7 @@
 ---
-- include: base_packages.yml
-- include: repos.yml
-- include: zoneminder.yml
-- include: nvidia.yml
-- include: config.yml
-- include: apache.yml
+- ansible.builtin._include: base_packages.yml
+- ansible.builtin._include: repos.yml
+- ansible.builtin._include: zoneminder.yml
+- ansible.builtin._include: nvidia.yml
+- ansible.builtin._include: config.yml
+- ansible.builtin._include: apache.yml

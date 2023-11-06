@@ -1,7 +1,7 @@
 ---
 - name: Install base packages for LAMP stack
-  apt:
+  ansible.builtin.apt:
     name: "{{ base_packages }}"
     state: latest
-    update_cache: yes
+    update_cache: true
   tags: base_packages
