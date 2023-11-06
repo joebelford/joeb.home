@@ -1,0 +1,4 @@
+---
+- import_tasks: configure.yml
+# - import_tasks: router_zone.yml
+- import_tasks: opnsense_zone.yml

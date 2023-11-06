@@ -1,0 +1,1 @@
+/usr/sbin/mdata-get root_authorized_keys > ~root/.ssh/authorized_keys

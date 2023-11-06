@@ -1,0 +1,73 @@
+---
+- name: Update all images
+  community.general.imgadm:
+    uuid: '*'
+    state: updated
+
+- name: Import an image
+  community.general.imgadm:
+    uuid: "{{ image_uuid }}"
+    state: present
+
+- name: Create external nic tag
+  community.general.nictagadm:
+    name: external
+    mac: 00:1b:21:d7:c1:26
+    state: present
+
+- name: Create internal nic tag
+  community.general.nictagadm:
+    name: internal
+    mac: 00:1b:21:d7:c1:27
+    state: present
+
+- name: Create guest nic tag
+  community.general.nictagadm:
+    name: guest
+    mac: 00:1b:21:d7:c1:27
+    state: present
+
+- name: create router zone
+  vmadm:
+    brand: joyent
+    state: running
+    alias: router
+    hostname: router
+    dns_domain: acrosstheroad
+    autoboot: true
+    # image_uuid: 7b021460-73f9-11ea-a6da-07800cddb2ca
+    # image_uuid: 064508d4-73fa-11ea-84d8-b3f1f91c535e
+    image_uuid: "{{ image_uuid }}"
+    firewall_enabled: false
+    max_physical_memory: 512
+    nics:
+      - nic_tag: external
+        ip: dhcp
+        # ips:
+        #   - 10.0.2.1/24
+        resolvers:
+          - 9.9.9.9
+          - 149.112.112.112
+        allow_ip_spoofing: true
+        interface: net0
+        primary: true
+      - nic_tag: internal
+        ips: [10.0.1.2/24]
+        allow_ip_spoofing: true
+        allow_dhcp_spoofing: true
+        dhcp_server: true
+        interface: net1
+      - nic_tag: guest
+        ips: [172.16.42.1/24]
+        allow_ip_spoofing: true
+        allow_dhcp_spoofing: true
+        dhcp_server: true
+        interface: net2
+        vlan_id: 1003
+    customer_metadata:
+      root_authorized_keys: "{{ lookup('file', 'id_rsa.pub') }}"
+      user-script: "{{ lookup('file', 'user-script') }}"
+    internal_metadata:
+      root_pw: "{{ root_pw }}"
+    quota: 20
+    nowait: true  # INFO - in case dhcp is not available

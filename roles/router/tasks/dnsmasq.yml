@@ -1,0 +1,27 @@
+---
+- name: install packages
+  pkgin:
+    name: dnsmasq
+    update_cache: no
+
+- name: apply /opt/local/etc/dnsmasq.conf
+  copy:
+    src: dnsmasq.conf
+    dest: /opt/local/etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: create /var/cache direcetory
+  file:
+    path: /var/cache
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: enable dnsmasq service
+  service:
+    name: dnsmasq
+    enabled: yes
+    state: started

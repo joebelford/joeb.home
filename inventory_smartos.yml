@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+    proliant:
+      ansible_host: 10.0.1.10
+      ansible_user: root
+      ansible_python_interpreter: /opt/local/bin/python
+  children:
+    global:
+      hosts:
+        proliant:

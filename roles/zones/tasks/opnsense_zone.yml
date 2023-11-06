@@ -1,0 +1,43 @@
+---
+- name: create blank zone
+  vmadm:
+    brand: bhyve
+    state: running
+    alias: opnsense
+    hostname: opnsense
+    dns_domain: acrosstheroad
+    autoboot: true
+    firewall_enabled: false
+    max_physical_memory: 1024
+    nics:
+      - nic_tag: external
+        ip: dhcp
+        # ips:
+        #   - 10.0.2.1/24
+        resolvers:
+          - 9.9.9.9
+          - 149.112.112.112
+        allow_ip_spoofing: true
+        interface: net0
+        primary: true
+        model: virtio
+      - nic_tag: internal
+        ips: [10.0.1.2/24]
+        allow_ip_spoofing: true
+        allow_dhcp_spoofing: true
+        dhcp_server: true
+        interface: net1
+        model: virtio
+      - nic_tag: guest
+        ips: [172.16.42.1/24]
+        allow_ip_spoofing: true
+        allow_dhcp_spoofing: true
+        dhcp_server: true
+        interface: net2
+        vlan_id: 1003
+        model: virtio
+  register: output
+
+- name: debug output
+  debug:
+    var: output.uuid
