@@ -1,0 +1,10 @@
+---
+- name: Import install unifi tasks
+  ansible.builtin.import_tasks: add_repos.yml
+  become: true
+- name: Import install mongo tasks
+  ansible.builtin.import_tasks: install_mongo.yml
+  become: true
+- name: Import install unifi tasks
+  ansible.builtin.import_tasks: install_unifi.yml
+  become: true

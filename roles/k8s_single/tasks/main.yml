@@ -1,0 +1,226 @@
+---
+- name: Add helm repo key
+  ansible.builtin.apt_key:
+    url: https://baltocdn.com/helm/signing.asc
+    state: present
+  become: true
+
+- name: Add helm repository
+  ansible.builtin.apt_repository:
+    repo: deb https://baltocdn.com/helm/stable/{{ ansible_distribution | lower }} all main
+    state: present
+    update_cache: true
+  become: true
+
+- name: Disable swap
+  ansible.builtin.command:
+    cmd: swapoff -a
+  become: true
+
+- name: Remove swap from fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    backrefs: true
+    regex: '^(?!\s*#)(.*\s+swap.*)$'
+    line: '# \1'
+  become: true
+
+- name: Allow bridging
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/containerd.conf
+    content: |
+      overlay
+      br_netfilter
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify:
+    - modprobe overlay
+    - modprobe br_netfilter
+
+- name: Update sysctl
+  ansible.builtin.copy:
+    dest: /etc/sysctl.d/99-kubernetes-k8s.conf
+    content: |
+      net.bridge.bridge-nf-call-iptables = 1
+      net.ipv4.ip_forward = 1
+      net.bridge.bridge-nf-call-ip6tables = 1
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify:
+    - sysctl
+
+- name: Notify a reboot may be needed
+  ansible.builtin.debug:
+    msg: Updating sysctl info may require a reboot.
+
+- name: Install dependent packages
+  ansible.builtin.apt:
+    name: 
+      - containerd
+      - gnupg
+      - gnupg2
+      - python3-kubernetes
+      - helm
+      # - curl
+      # - software-properties-common
+    state: latest
+    install_recommends: true
+  become: true
+
+- name: Generated containerd config
+  ansible.builtin.shell:
+    cmd: containerd config default > /etc/containerd/config.toml
+    creates: /etc/containerd/config.toml
+  become: true
+
+- name: Enable systemdCGroup
+  ansible.builtin.lineinfile:
+    path: /etc/containerd/config.toml
+    backrefs: true
+    regex: '^(\s*SystemdCgroup\s*=)\s*true'
+    line: '\1 true'
+  become: true
+
+- name: Enable and restart containerd
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+    enabled: true
+  become: true
+
+- name: add k8s repo key
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  become: true
+
+- name: Add k8s repository
+  ansible.builtin.apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    update_cache: true
+  become: true
+
+- name: Install k8s binaries
+  ansible.builtin.apt:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: latest
+    install_recommends: true
+  become: true
+
+- name: Hold packages to prevent auto upgrade
+  ansible.builtin.command:
+    cmd: apt-mark hold kubelet kubeadm kubectl
+  become: true
+
+- name: Kubeadm to create cluster
+  ansible.builtin.command:
+    cmd: kubeadm init --control-plane-endpoint={{ ansible_hostname }}
+    creates: /etc/kubernetes/admin.conf
+  become: true
+
+- name: Create .kube directory for joe
+  ansible.builtin.file:
+    state: directory
+    path: ~/.kube
+    mode: 0750
+
+- name: Create kubeconfig for joe
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/joe/.kube/config
+    remote_src: true
+    owner: joe
+    group: joe
+    mode: 0600
+  become: true
+
+- name: Remove taint for single node k8s cluster
+  kubernetes.core.k8s_taint:
+    state: absent
+    name: "{{ ansible_hostname }}"
+    taints:
+    - effect: NoSchedule
+      key: "node-role.kubernetes.io/control-plane"
+
+- name: Add cilium chart repo
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: "https://helm.cilium.io/"
+
+- name: Install cilium CNI
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    chart_version: 1.14.4
+    release_namespace: kube-system
+    values:
+      bgpControlPlane:
+        enabled: true
+      cgroup:
+        autoMount:
+          enabled: false
+        hostRoot: /sys/fs/cgroup
+      ipam:
+        mode: cluster-pool
+        operator:
+          clusterPoolIPv4PodCIDRList: 10.10.0.0/16 #https://docs.cilium.io/en/stable/network/kubernetes/ipam-cluster-pool/#gsg-ipam-crd-cluster-pool
+      k8sServiceHost: "{{ ansible_hostname }}"
+      k8sServicePort: 6443
+      kubeProxyReplacement: true
+      operator:
+        replicas: 1
+      securityContext:
+        capabilities:
+          ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+          cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+
+- name: Configure Cilium BGP
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', '{{ playbook_dir }}/../k8s/cilium/cilium-bgp-peering-policy.yaml') | from_yaml }}"
+
+- name: Configure Cilium LB
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', '{{ playbook_dir }}/../k8s/cilium/cilium-lb-ip-pool.yaml') | from_yaml }}"
+
+- name: Install NFD for GPU lookup
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd?ref=release-0.28') }}"
+
+- name: Install NFD rule for GPU lookup
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=release-0.28') }}"
+
+- name: Install plugin for GPU lookup
+  kubernetes.core.k8s:
+    state: present
+    namespace: node-feature-discovery
+    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/nfd_labeled_nodes?ref=release-0.28') }}"
+
+# - name: Install nfs-client
+# - name: Create NFS share for scaling

@@ -1,6 +1,6 @@
 ---
-- name: Docker hosts
+- name: Unifi hosts
   hosts: all
   roles:
     # - common
-    - docker
+    - unifi

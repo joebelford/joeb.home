@@ -1,0 +1,12 @@
+---
+- name: Install mongodb packages
+  ansible.builtin.apt:
+    name: "{{ mongodb_packages }}"
+    state: present
+    update_cache: true
+
+- name: Start service mongod, if not started
+  ansible.builtin.service:
+    name: mongod
+    state: started
+    enabled: true

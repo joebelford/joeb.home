@@ -1,5 +1,5 @@
 ---
 - name: Deploy unifi controller
-  hosts: unifi
+  hosts: all
   roles:
     - unifi_docker

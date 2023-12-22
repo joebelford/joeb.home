@@ -1,0 +1,12 @@
+---
+- name: Install unifi packages
+  ansible.builtin.apt:
+    name: "{{ unifi_packages }}"
+    state: latest
+    update_cache: true
+
+- name: Start service unifi, if not started
+  ansible.builtin.service:
+    name: unifi
+    state: started
+    enabled: true

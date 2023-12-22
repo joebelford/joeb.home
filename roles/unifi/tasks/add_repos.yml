@@ -1,0 +1,22 @@
+---
+- name: Add an Apt signing key, uses whichever key is at the URL
+  ansible.builtin.apt_key:
+    url: https://dl.ui.com/unifi/unifi-repo.gpg
+    state: present
+
+- name: Add an Apt signing key, uses whichever key is at the URL
+  ansible.builtin.apt_key:
+    url: https://www.mongodb.org/static/pgp/server-4.4.asc
+    state: present
+
+- name: Add ubiquiti apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://www.ui.com/downloads/unifi/{{ ansible_distribution | lower }} stable ubiquiti
+    state: present
+    update_cache: true
+
+- name: Add mongodb apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://repo.mongodb.org/apt/{{ ansible_distribution | lower }} buster/mongodb-org/4.4 main
+    state: present
+    update_cache: true

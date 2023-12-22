@@ -1,5 +1,5 @@
 ---
-- name: Ensure unifi config directory exists
+- name: Ensure unifi directories exists
   ansible.builtin.file:
     path: /opt/unifi/{{ item }}
     state: directory
@@ -9,3 +9,12 @@
     group: 1000
   loop:
     - config
+    - data
+
+- name: deploy init script
+  ansible.builtin.template:
+    src: init-mongo.js.j2
+    dest: /opt/unifi/init-mongo.js
+    mode: "0750"
+    owner: 1000
+    group: 1000

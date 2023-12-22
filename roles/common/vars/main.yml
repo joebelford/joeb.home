@@ -7,14 +7,14 @@ fedora_base_packages:
 
 debian_base_packages:
   - gpp
-  - sudo
-  # - python3-pip
-  - python3-apt
-  - firmware-linux-nonfree
-  - avahi-daemon
-  - cifs-utils
-  - zip
-  - net-tools
+  # - sudo
+  # # - python3-pip
+  # - python3-apt
+  # - firmware-linux-nonfree
+  # - avahi-daemon
+  # - cifs-utils
+  # - zip
+  # - net-tools
 
 debian_dev_packages:
 # - libavahi-compat-libdnssd-dev
@@ -47,9 +47,9 @@ nvidia_driver_pkgs:
   - mesa-va-drivers
 
 debian_repos:
-  - deb http://deb.debian.org/debian bullseye main contrib non-free
-  - deb-src http://deb.debian.org/debian bullseye main contrib non-free
-  - deb http://deb.debian.org/debian-security bullseye-security main contrib non-free
-  - deb-src http://deb.debian.org/debian-security bullseye-security main contrib non-free
-  - deb http://deb.debian.org/debian bullseye-updates main contrib non-free
-  - deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+  # - deb http://deb.debian.org/debian bullseye main contrib non-free
+  # - deb-src http://deb.debian.org/debian bullseye main contrib non-free
+  # - deb http://deb.debian.org/debian-security bullseye-security main contrib non-free
+  # - deb-src http://deb.debian.org/debian-security bullseye-security main contrib non-free
+  # - deb http://deb.debian.org/debian bullseye-updates main contrib non-free
+  # - deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free

@@ -1,0 +1,5 @@
+---
+- name: k8s single node cluster
+  hosts: all
+  roles:
+    - k8s_single

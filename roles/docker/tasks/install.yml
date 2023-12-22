@@ -16,10 +16,10 @@
     state: latest
     update_cache: true
 
-- name: Install docker python module
-  ansible.builtin.pip:
-    name: docker
-    state: latest
+# - name: Install docker python module
+#   ansible.builtin.pip:
+#     name: docker
+#     state: latest
 
 - name: Add joe to docker group
   ansible.builtin.user:

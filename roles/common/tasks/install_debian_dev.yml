@@ -1,0 +1,7 @@
+---
+- name: Install dev packages
+  ansible.builtin.apt:
+    name: "{{ debian_dev_packages }}"
+    state: latest
+  tags:
+    - dev

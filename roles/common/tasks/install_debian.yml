@@ -1,19 +1,13 @@
 ---
-- name: Add contrib and non-free repos
-  ansible.builtin.apt_repository:
-    repo: "{{ item }}"
-    state: present
-    update_cache: true
-  loop: "{{ debian_repos }}"
+# - name: Add contrib and non-free repos
+#   ansible.builtin.apt_repository:
+#     repo: "{{ item }}"
+#     state: present
+#     update_cache: true
+#   loop: "{{ debian_repos }}"
 
 - name: Install base packages
   ansible.builtin.apt:
     name: "{{ debian_base_packages }}"
     state: latest
-
-- name: Install dev packages
-  ansible.builtin.apt:
-    name: "{{ debian_dev_packages }}"
-    state: latest
-  tags:
-    - dev
+    install_recommends: true
