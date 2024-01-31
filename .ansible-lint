@@ -2,6 +2,6 @@
 warn_list:
   - package-latest
 exclude_paths:
-  - ./old_roles
+  - old_roles
   - roles/homeassistant_docker/files/zones.yaml
-  - ./misc
+  - misc
