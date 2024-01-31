@@ -1,6 +1,6 @@
 ---
 - name: Configure date time in php.ini
-  ini_file:
+  community.general.ini_file:
     path: /etc/php/7.3/apache2/php.ini
     section: Date
     option: date.timezone

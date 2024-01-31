@@ -1,4 +1,3 @@
 ---
-- import_tasks: configure.yml
-# - import_tasks: router_zone.yml
-- import_tasks: opnsense_zone.yml
+- ansible.builtin.import_tasks: configure.yml
+- ansible.builtin.import_tasks: opnsense_zone.yml

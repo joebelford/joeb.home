@@ -1,27 +1,27 @@
 ---
-- name: install packages
-  pkgin:
+- name: Install packages
+  community.general.pkgin:
     name: dnsmasq
-    update_cache: no
+    update_cache: false
 
-- name: apply /opt/local/etc/dnsmasq.conf
-  copy:
+- name: Apply /opt/local/etc/dnsmasq.conf
+  ansible.builtin.copy:
     src: dnsmasq.conf
     dest: /opt/local/etc/dnsmasq.conf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
-- name: create /var/cache direcetory
-  file:
+- name: Create /var/cache direcetory
+  ansible.builtin.file:
     path: /var/cache
     state: directory
-    mode: '0755'
+    mode: "0755"
     owner: root
     group: root
 
-- name: enable dnsmasq service
-  service:
+- name: Enable dnsmasq service
+  ansible.builtin.service:
     name: dnsmasq
-    enabled: yes
+    enabled: true
     state: started

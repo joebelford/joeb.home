@@ -1,17 +1,16 @@
 ---
-- name: deploy /etc/ipf/ipnat.conf file
-  copy:
+- name: Deploy /etc/ipf/ipnat.conf file
+  ansible.builtin.copy:
     src: ipnat.conf
     dest: /etc/ipf/ipnat.conf
     owner: root
     group: sys
     mode: "0644"
 
-- name: configure routing
-  command: "routeadm -u -e ipv4-forwarding"
-
-- name: enable ipfilter service
-  service:
+- name: Configure routing
+  ansible.builtin.command: routeadm -u -e ipv4-forwarding
+- name: Enable ipfilter service
+  ansible.builtin.service:
     name: ipfilter
-    enabled: yes
+    enabled: true
     state: started

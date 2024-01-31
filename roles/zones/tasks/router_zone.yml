@@ -1,7 +1,7 @@
 ---
 - name: Update all images
   community.general.imgadm:
-    uuid: '*'
+    uuid: "*"
     state: updated
 
 - name: Import an image
@@ -12,23 +12,23 @@
 - name: Create external nic tag
   community.general.nictagadm:
     name: external
-    mac: 00:1b:21:d7:c1:26
+    mac: "00:1b:21:d7:c1:26"
     state: present
 
 - name: Create internal nic tag
   community.general.nictagadm:
     name: internal
-    mac: 00:1b:21:d7:c1:27
+    mac: "00:1b:21:d7:c1:27"
     state: present
 
 - name: Create guest nic tag
   community.general.nictagadm:
     name: guest
-    mac: 00:1b:21:d7:c1:27
+    mac: "00:1b:21:d7:c1:27"
     state: present
 
-- name: create router zone
-  vmadm:
+- name: Create router zone
+  community.general.vmadm:
     brand: joyent
     state: running
     alias: router
@@ -70,4 +70,4 @@
     internal_metadata:
       root_pw: "{{ root_pw }}"
     quota: 20
-    nowait: true  # INFO - in case dhcp is not available
+    nowait: true # INFO - in case dhcp is not available

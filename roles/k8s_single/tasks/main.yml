@@ -21,8 +21,8 @@
   ansible.builtin.lineinfile:
     path: /etc/fstab
     backrefs: true
-    regex: '^(?!\s*#)(.*\s+swap.*)$'
-    line: '# \1'
+    regex: ^(?!\s*#)(.*\s+swap.*)$
+    line: "# \\1"
   become: true
 
 - name: Allow bridging
@@ -33,7 +33,7 @@
       br_netfilter
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   become: true
   notify:
     - modprobe overlay
@@ -48,7 +48,7 @@
       net.bridge.bridge-nf-call-ip6tables = 1
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   become: true
   notify:
     - sysctl
@@ -59,7 +59,7 @@
 
 - name: Install dependent packages
   ansible.builtin.apt:
-    name: 
+    name:
       - containerd
       - gnupg
       - gnupg2
@@ -81,8 +81,8 @@
   ansible.builtin.lineinfile:
     path: /etc/containerd/config.toml
     backrefs: true
-    regex: '^(\s*SystemdCgroup\s*=)\s*true'
-    line: '\1 true'
+    regex: ^(\s*SystemdCgroup\s*=)\s*true
+    line: \1 true
   become: true
 
 - name: Enable and restart containerd
@@ -92,7 +92,7 @@
     enabled: true
   become: true
 
-- name: add k8s repo key
+- name: Add k8s repo key
   ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
@@ -130,7 +130,7 @@
   ansible.builtin.file:
     state: directory
     path: ~/.kube
-    mode: 0750
+    mode: "0750"
 
 - name: Create kubeconfig for joe
   ansible.builtin.copy:
@@ -139,7 +139,7 @@
     remote_src: true
     owner: joe
     group: joe
-    mode: 0600
+    mode: "0600"
   become: true
 
 - name: Remove taint for single node k8s cluster
@@ -147,13 +147,13 @@
     state: absent
     name: "{{ ansible_hostname }}"
     taints:
-    - effect: NoSchedule
-      key: "node-role.kubernetes.io/control-plane"
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
 
 - name: Add cilium chart repo
   kubernetes.core.helm_repository:
     name: cilium
-    repo_url: "https://helm.cilium.io/"
+    repo_url: https://helm.cilium.io/
 
 - name: Install cilium CNI
   kubernetes.core.helm:
@@ -180,21 +180,21 @@
       securityContext:
         capabilities:
           ciliumAgent:
-          - CHOWN
-          - KILL
-          - NET_ADMIN
-          - NET_RAW
-          - IPC_LOCK
-          - SYS_ADMIN
-          - SYS_RESOURCE
-          - DAC_OVERRIDE
-          - FOWNER
-          - SETGID
-          - SETUID
+            - CHOWN
+            - KILL
+            - NET_ADMIN
+            - NET_RAW
+            - IPC_LOCK
+            - SYS_ADMIN
+            - SYS_RESOURCE
+            - DAC_OVERRIDE
+            - FOWNER
+            - SETGID
+            - SETUID
           cleanCiliumState:
-          - NET_ADMIN
-          - SYS_ADMIN
-          - SYS_RESOURCE
+            - NET_ADMIN
+            - SYS_ADMIN
+            - SYS_RESOURCE
 
 - name: Configure Cilium BGP
   kubernetes.core.k8s:
@@ -214,13 +214,15 @@
 - name: Install NFD rule for GPU lookup
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=release-0.28') }}"
+    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=release-0.28')
+      }}"
 
 - name: Install plugin for GPU lookup
   kubernetes.core.k8s:
     state: present
     namespace: node-feature-discovery
-    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/nfd_labeled_nodes?ref=release-0.28') }}"
+    definition: "{{ lookup('kubernetes.core.kustomize', dir='https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/nfd_labeled_nodes?ref=release-0.28')
+      }}"
 
 # - name: Install nfs-client
 # - name: Create NFS share for scaling

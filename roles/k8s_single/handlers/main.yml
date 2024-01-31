@@ -1,13 +1,13 @@
 ---
-- name: modprobe overlay
+- name: Modprobe overlay
   ansible.builtin.command:
     cmd: modprobe overlay
   become: true
-- name: modprobe br_netfilter
+- name: Modprobe br_netfilter
   ansible.builtin.command:
     cmd: br_netfilter
   become: true
-- name: sysctl
+- name: Sysctl
   ansible.builtin.command:
     cmd: sysctl --system
   become: true

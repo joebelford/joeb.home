@@ -1,24 +1,24 @@
 ---
-- name: create config include directory
+- name: Create config include directory
   ansible.builtin.file:
     path: /usbkey/config.inc
     state: directory
-    mode: 0750
+    mode: "0750"
     owner: root
     group: root
 
-- name: update config for authorized root_authorized_keys
+- name: Update config for authorized root_authorized_keys
   ansible.builtin.lineinfile:
     path: /usbkey/config
-    regexp: "^root_authorized_keys_file="
+    regexp: ^root_authorized_keys_file=
     line: root_authorized_keys_file=authorized_keys
-    mode: 0600
+    mode: "0600"
     owner: root
     group: root
 
-- name: add authorized_keys
+- name: Add authorized_keys
   ansible.posix.authorized_key:
     user: root
     path: /usbkey/config.inc/authorized_keys
-    key: "{{ lookup( 'file', 'id_rsa.pub') }}"
+    key: "{{ lookup('file', 'id_rsa.pub') }}"
     state: present

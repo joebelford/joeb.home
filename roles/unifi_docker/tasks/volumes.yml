@@ -11,7 +11,7 @@
     - config
     - data
 
-- name: deploy init script
+- name: Deploy init script
   ansible.builtin.template:
     src: init-mongo.js.j2
     dest: /opt/unifi/init-mongo.js

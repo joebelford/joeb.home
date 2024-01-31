@@ -1,6 +1,6 @@
 ---
-- name: create blank zone
-  vmadm:
+- name: Create blank zone
+  community.general.vmadm:
     brand: bhyve
     state: running
     alias: opnsense
@@ -38,6 +38,6 @@
         model: virtio
   register: output
 
-- name: debug output
-  debug:
+- name: Debug output
+  ansible.builtin.debug:
     var: output.uuid

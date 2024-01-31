@@ -1,5 +1,5 @@
 ---
 unifi_packages:
-    - unifi
+  - unifi
 mongodb_packages:
-    - mongodb-org=4.4.26
+  - mongodb-org=4.4.26
