@@ -1,6 +1,0 @@
----
-- name: Docker hosts
-  hosts: all
-  roles:
-    # - common
-    - docker

@@ -1,2 +1,2 @@
 ---
-fluentbit_image: cr.fluentbit.io/fluent/fluent-bit
+fluentbit_image: cr.fluentbit.io/fluent/fluent-bit:latest

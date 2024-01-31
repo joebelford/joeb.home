@@ -1,5 +1,0 @@
----
-- name: Deploy homebridge
-  hosts: homebridge
-  roles:
-    - homebridge_docker

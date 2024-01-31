@@ -1,7 +1,0 @@
----
-- name: Deploy fluentbit
-  hosts: fluentbit
-  vars:
-    fluentbit_image: cr.fluentbit.io/fluent/fluent-bit:latest
-  roles:
-    - fluentbit_podman
