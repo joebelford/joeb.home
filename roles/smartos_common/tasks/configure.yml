@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: /usbkey/config.inc
     state: directory
-    mode: "0750"
+    mode: "0700"
     owner: root
     group: root
 
