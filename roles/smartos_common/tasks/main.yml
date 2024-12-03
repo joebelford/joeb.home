@@ -4,3 +4,6 @@
   become_method: sudo
   community.general.pkgin:
     update_cache: true
+
+- name: Import configure playbook
+  ansible.builtin.import_tasks: configure.yml
